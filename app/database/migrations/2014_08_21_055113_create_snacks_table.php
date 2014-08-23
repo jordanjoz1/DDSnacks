@@ -31,10 +31,7 @@ class CreateSnacksTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::table('snacks', function(Blueprint $table)
-		{
-			//
-		});
+        Schema::drop('snacks');
 	}
 
 }

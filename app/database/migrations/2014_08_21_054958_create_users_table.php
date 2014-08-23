@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration {
             $table->string('email')->unique();
             $table->string('password');
             $table->timestamps();
+            $table->rememberToken();
 		});
 	}
 
@@ -28,10 +29,7 @@ class CreateUsersTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::table('users', function(Blueprint $table)
-		{
-			//
-		});
+        Schema::drop('users');
 	}
 
 }

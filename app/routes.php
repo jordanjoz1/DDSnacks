@@ -18,17 +18,10 @@ Validator::extend('DDEmail', function($attribute, $value, $parameters)
     return $domain == "doubledutch.me";
 });
 
-Route::get('/', function()
+Route::get('/', array('before' => 'auth', function()
 {
-    if (Auth::check()) 
-    {
-        return View::make('hello');
-    }
-    else
-    {
-        return Redirect::to('index.php/login');
-    }
-});
+    return View::make('hello');
+}));
 
 Route::get('/authtest', array('before' => 'auth.basic', function()
 {
