@@ -11,9 +11,23 @@
 |
 */
 
+Validator::extend('DDEmail', function($attribute, $value, $parameters)
+{
+    $value = explode('@', $value);
+    $domain = array_pop($value);
+    return $domain == "doubledutch.me";
+});
+
 Route::get('/', function()
 {
-	return View::make('hello');
+    if (Auth::check()) 
+    {
+        return View::make('hello');
+    }
+    else
+    {
+        return Redirect::to('index.php/login');
+    }
 });
 
 Route::get('/authtest', array('before' => 'auth.basic', function()
@@ -25,3 +39,13 @@ Route::group(array('prefix' => 'api/v1', 'before' => 'auth.basic'), function()
 {
     Route::resource('snack', 'SnackController');
 });
+
+Route::controller('users', 'UsersController');
+
+Route::get('login', array('uses' => 'UsersController@login'));
+
+Route::post('login', array('uses' => 'UsersController@postLogin'));
+
+Route::get('signup', array('uses' => 'UsersController@create'));
+
+Route::get('logout', array('uses' => 'HomeController@doLogout'));
