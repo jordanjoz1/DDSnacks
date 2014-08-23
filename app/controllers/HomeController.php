@@ -17,7 +17,7 @@ class HomeController extends BaseController {
 
 	public function showMainPage() 
     {
-        return View::make('hello');
+        return View::make('main')->with('snacks', Snack::all());
     }
     
     public function doLogout()
