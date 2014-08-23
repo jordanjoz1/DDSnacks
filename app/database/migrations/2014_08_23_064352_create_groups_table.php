@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSnacksTable extends Migration {
+class CreateGroupsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,20 +12,16 @@ class CreateSnacksTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('snacks', function(Blueprint $table)
+		Schema::create('groups', function(Blueprint $table)
 		{
 			$table->increments('id');
             $table->string('name')->unique();
             $table->string('description');
-            $table->integer('group_id')->unsigned();
             $table->integer('created_by')->unsigned();
-            $table->integer('upvotes')->default(0);
-            $table->integer('downvotes')->default(0);
             $table->timestamps();
 		});
         
-        Schema::table('snacks', function($table) {
-            $table->foreign('group_id')->references('id')->on('groups');
+        Schema::table('groups', function($table) {
             $table->foreign('created_by')->references('id')->on('users');
         });
 	}
@@ -37,7 +33,7 @@ class CreateSnacksTable extends Migration {
 	 */
 	public function down()
 	{
-        Schema::drop('snacks');
+        Schema::drop('groups');
 	}
 
 }
