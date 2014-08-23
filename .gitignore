@@ -6,3 +6,12 @@ composer.lock
 .env.php
 .DS_Store
 Thumbs.db
+
+.idea/.name
+.idea/ddsnacks.com.iml
+.idea/encodings.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/scopes/scope_settings.xml
+.idea/vcs.xml
+.idea/workspace.xml
