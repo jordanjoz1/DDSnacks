@@ -90,7 +90,6 @@
             position: relative;
             overflow: hidden;
             border-bottom: 1px solid #aaa;;
-
         }
 
         .arrow-up {
@@ -98,9 +97,12 @@
             float: right;
             border-left: 20px solid transparent;
             border-right: 20px solid transparent;
-
             border-bottom: 20px solid;
-            border-bottom-color: green;
+            border-bottom-color: lightgray;
+        }
+
+        .arrow-up:hover, .arrow-up:focus {
+            border-bottom-color: lightgreen;
         }
 
         .arrow-down {
@@ -108,7 +110,11 @@
             border-left: 20px solid transparent;
             border-right: 20px solid transparent;
             border-top: 20px solid;
-            border-top-color: #ff0000;
+            border-top-color: lightgray;
+        }
+
+        .arrow-down:hover, .arrow-down:focus {
+            border-top-color: lightpink;
         }
 
         .snack_list_item_text {
@@ -134,9 +140,20 @@
             margin-top: 8px;
         }
     </style>
-
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $(".arrow-up").click(function(){
+                $(this).css( "border-bottom-color", "green" );
+            });
+            $(".arrow-down").click(function(){
+                $(this).css( "border-top-color", "red" );
+            });
+        });
+    </script>
 </head>
 <body>
+
 <div class="welcome">
     <h1>DD Snacks</h1>
 
@@ -145,6 +162,19 @@
         <input id="addNewButton" type="button" value="Add">
     </form>
     <div class="list_snacks">
+        <div class="snack_list_item">
+            <div class="arrow-container">
+                <div class="arrow-down"></div>
+                <div class="arrow-value">-1</div>
+            </div>
+            <div class="snack-list-item-text-container">
+                <div class="snack_list_item_text">Oatmeal (100)</div>
+            </div>
+            <div class="arrow-container">
+                <div class="arrow-up"></div>
+                <div class="arrow-value">+101</div>
+            </div>
+        </div>
         <div class="snack_list_item">
             <div class="arrow-container">
                 <div class="arrow-down"></div>
