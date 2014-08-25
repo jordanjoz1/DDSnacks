@@ -9,7 +9,7 @@ class VoteController extends \BaseController {
 	 */
 	public function index()
 	{
-       //
+        //
 	}
 
 
@@ -54,10 +54,10 @@ class VoteController extends \BaseController {
         // attempt to get existing vote
         $vote = Vote::where('snack_id', $id)
             ->where('user_id', Auth::user()->id)
-            ->take(1)
-            ->get();
+            ->first();
 
         // create a new vote if empty
+        $isChangingVote = false;
         if (empty($vote))
         {
             $vote = new Vote;
@@ -67,7 +67,6 @@ class VoteController extends \BaseController {
         }
         else
         {
-            $vote = $vote[0];
             // dont' allow user to make the same vote multiple times
             if ($vote->value == $value) {
                 return Response::json(array(
@@ -77,28 +76,27 @@ class VoteController extends \BaseController {
                 );
             }
             else {
+                $isChangingVote = true;
                 $vote->value = $value;
             }
         }
         $vote->save();
 
-        //TODO the vote was successful, so subtract from remaining votes
-
-
         // update snack's votes
         $snack = Snack::where('id', $id)
-            ->take(1)
-            ->get();
-        if (!empty($snack))
-        {
-            $snack = $snack[0];
-            if ($value == 1) {
-                $snack->upvotes = $snack->upvotes + 1;
-            } else {
-                $snack->downvotes = $snack->downvotes + 1;
+            ->first();
+        if ($value == 1) {
+            $snack->upvotes += 1;
+            if ($isChangingVote) {
+                $snack->downvotes -= 1;
             }
-            $snack->save();
+        } else {
+            $snack->downvotes += 1;
+            if ($isChangingVote) {
+                $snack->upvotes -= 1;
+            }
         }
+        $snack->save();
 
         return Response::json(array(
                 'error' => false,
