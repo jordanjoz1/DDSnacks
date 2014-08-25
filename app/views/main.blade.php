@@ -147,13 +147,32 @@
                 $(this).css("border-bottom-color", "green");
                 var snackId = $(this).data('id');
                 $("#snack-item-id-" + snackId).find(".arrow-down").css("border-top-color", "lightgray");
+                vote(snackId, 1);
             });
             $(".arrow-down").click(function () {
                 $(this).css("border-top-color", "red");
                 var snackId = $(this).data('id');
                 $("#snack-item-id-" + snackId).find(".arrow-up").css("border-bottom-color", "lightgray");
+                vote(snackId, -1);
             });
         });
+
+        function updateSnackItem(snack) {
+            $("#down-arrow-container-" + snack.id).find(".arrow-value").html("-" + snack.downvotes);
+            $("#up-arrow-container-" + snack.id).find(".arrow-value").html("+" + snack.upvotes);
+            var sum_votes = snack.upvotes - snack.downvotes;
+            $("#snack-item-id-" + snack.id).find(".snack_list_item_text").html(snack.name + " (" + sum_votes + ")");
+        }
+        function vote(snackId, value) {
+            $.post("index.php/api/v1/vote",
+                {id:snackId, value:value},
+                function(data, textStatus, jqXHR)
+                {
+                    if (!data.error) {
+                        updateSnackItem(data.snack);
+                    }
+                });
+        }
     </script>
 </head>
 <body>
@@ -168,7 +187,7 @@
     <div class="list_snacks">
         @foreach ($snacks as $snack)
             <div class="snack_list_item" id="snack-item-id-{{{ $snack->id }}}">
-                <div class="arrow-container">
+                <div class="arrow-container" id="down-arrow-container-{{{ $snack->id }}}">
                     <div class="arrow-down" data-id="{{{ $snack->id }}}"></div>
                     <div class="arrow-value">-{{{ $snack->downvotes }}}</div>
                 </div>
@@ -176,7 +195,7 @@
                     <div class="snack_list_item_text">{{{ $snack->name }}} ({{{ $snack->upvotes - $snack->downvotes }}})
                     </div>
                 </div>
-                <div class="arrow-container">
+                <div class="arrow-container" id="up-arrow-container-{{{ $snack->id }}}">
                     <div class="arrow-up" data-id="{{{ $snack->id }}}"></div>
                     <div class="arrow-value">+{{{ $snack->upvotes }}}</div>
                 </div>

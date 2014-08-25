@@ -48,7 +48,7 @@ class SnackController extends \BaseController {
         
         return Response::json(array(
             'error' => false,
-            'snacks' => $snacks->toArray()),
+            'snacks' => $snack->toArray()),
             200
         );
 	}
@@ -67,14 +67,13 @@ class SnackController extends \BaseController {
                     ->where('id', $id)
                     ->take(1)
                     ->get();
-                    
+
         return Response::json(array(
             'error' => false,
-            'urls' => $url->toArray()),
+            'snack' => $snack->toArray()),
             200
         );
 	}
-
 
 	/**
 	 * Show the form for editing the specified resource.
