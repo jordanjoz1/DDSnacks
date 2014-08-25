@@ -145,9 +145,13 @@
         $(document).ready(function () {
             $(".arrow-up").click(function () {
                 $(this).css("border-bottom-color", "green");
+                var snackId = $(this).data('id');
+                $("#snack-item-id-" + snackId).find(".arrow-down").css("border-top-color", "lightgray");
             });
             $(".arrow-down").click(function () {
                 $(this).css("border-top-color", "red");
+                var snackId = $(this).data('id');
+                $("#snack-item-id-" + snackId).find(".arrow-up").css("border-bottom-color", "lightgray");
             });
         });
     </script>
@@ -163,9 +167,9 @@
     </form>
     <div class="list_snacks">
         @foreach ($snacks as $snack)
-            <div class="snack_list_item">
+            <div class="snack_list_item" id="snack-item-id-{{{ $snack->id }}}">
                 <div class="arrow-container">
-                    <div class="arrow-down"></div>
+                    <div class="arrow-down" data-id="{{{ $snack->id }}}"></div>
                     <div class="arrow-value">-{{{ $snack->downvotes }}}</div>
                 </div>
                 <div class="snack-list-item-text-container">
@@ -173,7 +177,7 @@
                     </div>
                 </div>
                 <div class="arrow-container">
-                    <div class="arrow-up"></div>
+                    <div class="arrow-up" data-id="{{{ $snack->id }}}"></div>
                     <div class="arrow-value">+{{{ $snack->upvotes }}}</div>
                 </div>
             </div>
