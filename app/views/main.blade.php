@@ -34,7 +34,7 @@
         }
 
         /***FIRST STYLE THE BUTTON***/
-        input#addNewButton {
+        input#add-new-button {
             border: 2px groove #7c93ba;
             cursor: pointer; /*forces the cursor to change to a hand when the button is hovered*/
             padding: 0 20px;
@@ -57,7 +57,7 @@
         }
 
         /***NOW STYLE THE BUTTON'S HOVER AND FOCUS STATES***/
-        input#addNewButton:hover, input#addNewButton:focus {
+        input#add-new-button:hover, input#add-new-button:focus {
             color: #edebda;
             /*reduce the spread of the shadow to give a pushed effect*/
             -webkit-box-shadow: rgba(0, 0, 0, .25) 0 1px 0;
@@ -65,7 +65,7 @@
             box-shadow: rgba(0, 0, 0, .25) 0 1px 0;
         }
 
-        .add_new_form input, .add_new_form textarea {
+        .add-new-form input, .add-new-form textarea {
             padding: 1px 1px 1px 8px;
             height: 30px;
             border: 1px solid #aaa;
@@ -73,17 +73,17 @@
             border-radius: 2px;
         }
 
-        .add_new_form input:focus, .add_new_form textarea:focus {
+        .add-new-form input:focus, .add-new-form textarea:focus {
             background: #fff;
             border: 1px solid #555;
             box-shadow: 0 0 3px #aaa;
         }
 
-        .list_snacks {
+        #list-snacks {
             margin-top: 16px;
         }
 
-        .snack_list_item {
+        .snack-list-item {
             padding: 8px;
             padding-bottom: 12px;
             padding-top: 12px;
@@ -117,7 +117,7 @@
             border-top-color: lightpink;
         }
 
-        .snack_list_item_text {
+        .snack-list-item_text {
             display: inline-block;
             *display: inline;
             zoom: 1;
@@ -139,8 +139,13 @@
             vertical-align: top;
             margin-top: 8px;
         }
+        ul {
+            padding: 0;
+            list-style-type: none;
+        }
     </style>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/list.min.js" ></script>
     <script>
         $(document).ready(function () {
             $(".arrow-up").click(function () {
@@ -155,13 +160,20 @@
                 $("#snack-item-id-" + snackId).find(".arrow-up").css("border-bottom-color", "lightgray");
                 vote(snackId, -1);
             });
+
+            // setup list filtering
+            var options = {
+                valueNames: [ 'name' ]
+            };
+            var snackList = new List('list-snacks', options);
         });
+
 
         function updateSnackItem(snack) {
             $("#down-arrow-container-" + snack.id).find(".arrow-value").html("-" + snack.downvotes);
             $("#up-arrow-container-" + snack.id).find(".arrow-value").html("+" + snack.upvotes);
             var sum_votes = snack.upvotes - snack.downvotes;
-            $("#snack-item-id-" + snack.id).find(".snack_list_item_text").html(snack.name + " (" + sum_votes + ")");
+            $("#snack-item-id-" + snack.id).find(".snack-list-item_text").html(snack.name + " (" + sum_votes + ")");
         }
         function vote(snackId, value) {
             $.post("index.php/api/v1/vote",
@@ -179,28 +191,31 @@
 
 <div class="welcome">
     <h1>DD Snacks</h1>
-
-    <form class="add_new_form">
-        <input type="text" name="new_snack" placeholder="create a new snack">
-        <input id="addNewButton" type="button" value="Add">
-    </form>
-    <div class="list_snacks">
+    <div id="list-snacks">
+        <form class="add-new-form">
+            <input class="search" id="add-new-snack-input" type="text" name="new_snack" placeholder="create a new snack">
+            <input id="add-new-button" type="button" value="Add" data-sort="name">
+        </form>
+        <ul class="list">
         @foreach ($snacks as $snack)
-            <div class="snack_list_item" id="snack-item-id-{{{ $snack->id }}}">
-                <div class="arrow-container" id="down-arrow-container-{{{ $snack->id }}}">
-                    <div class="arrow-down" data-id="{{{ $snack->id }}}"></div>
-                    <div class="arrow-value">-{{{ $snack->downvotes }}}</div>
-                </div>
-                <div class="snack-list-item-text-container">
-                    <div class="snack_list_item_text">{{{ $snack->name }}} ({{{ $snack->upvotes - $snack->downvotes }}})
+            <li>
+                <div class="snack-list-item" id="snack-item-id-{{{ $snack->id }}}">
+                    <div class="arrow-container" id="down-arrow-container-{{{ $snack->id }}}">
+                        <div class="arrow-down" data-id="{{{ $snack->id }}}"></div>
+                        <div class="arrow-value">-{{{ $snack->downvotes }}}</div>
+                    </div>
+                    <div class="snack-list-item-text-container">
+                        <div class="snack-list-item_text name">{{{ $snack->name }}} ({{{ $snack->upvotes - $snack->downvotes }}})
+                        </div>
+                    </div>
+                    <div class="arrow-container" id="up-arrow-container-{{{ $snack->id }}}">
+                        <div class="arrow-up" data-id="{{{ $snack->id }}}"></div>
+                        <div class="arrow-value">+{{{ $snack->upvotes }}}</div>
                     </div>
                 </div>
-                <div class="arrow-container" id="up-arrow-container-{{{ $snack->id }}}">
-                    <div class="arrow-up" data-id="{{{ $snack->id }}}"></div>
-                    <div class="arrow-value">+{{{ $snack->upvotes }}}</div>
-                </div>
-            </div>
+            </li>
         @endforeach
+        </ul>
     </div>
 </div>
 </body>
