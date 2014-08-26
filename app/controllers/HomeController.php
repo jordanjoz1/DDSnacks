@@ -17,7 +17,17 @@ class HomeController extends BaseController {
 
 	public function showMainPage() 
     {
-        return View::make('main')->with('snacks', Snack::all());
+        // get snacks
+        $snacks = DB::table('snacks')
+            ->leftJoin('votes', function($join)
+            {
+                $join->on('snacks.id', '=', 'votes.snack_id')
+                    ->where('votes.user_id', '=', Auth::user()->id);
+            })
+            ->select('snacks.*', 'votes.value as vote_value')
+            ->get();
+
+        return View::make('main')->with('snacks', $snacks);
     }
     
     public function doLogout()

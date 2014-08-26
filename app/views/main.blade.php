@@ -19,7 +19,7 @@
             height: 200px;
             position: absolute;
             left: 50%;
-            top: 50%;
+            top: 20%;
             margin-left: -150px;
             margin-top: -100px;
         }
@@ -101,6 +101,10 @@
             border-bottom-color: lightgray;
         }
 
+        .arrow-up.selected {
+            border-bottom-color: green;
+        }
+
         .arrow-up:hover, .arrow-up:focus {
             border-bottom-color: lightgreen;
         }
@@ -111,6 +115,10 @@
             border-right: 20px solid transparent;
             border-top: 20px solid;
             border-top-color: lightgray;
+        }
+
+        .arrow-down.selected {
+            border-top-color: red;
         }
 
         .arrow-down:hover, .arrow-down:focus {
@@ -176,6 +184,7 @@
             $("#snack-item-id-" + snack.id).find(".snack-list-item_text").html(snack.name + " (" + sum_votes + ")");
         }
         function vote(snackId, value) {
+            console.log(snackId + " " + value);
             $.post("index.php/api/v1/vote",
                 {id:snackId, value:value},
                 function(data, textStatus, jqXHR)
@@ -201,7 +210,11 @@
             <li>
                 <div class="snack-list-item" id="snack-item-id-{{{ $snack->id }}}">
                     <div class="arrow-container" id="down-arrow-container-{{{ $snack->id }}}">
-                        <div class="arrow-down" data-id="{{{ $snack->id }}}"></div>
+                        @if ($snack->vote_value === -1)
+                            <div class="arrow-down selected" data-id="{{{ $snack->id }}}"></div>
+                        @else
+                            <div class="arrow-down" data-id="{{{ $snack->id }}}"></div>
+                        @endif
                         <div class="arrow-value">-{{{ $snack->downvotes }}}</div>
                     </div>
                     <div class="snack-list-item-text-container">
@@ -209,7 +222,11 @@
                         </div>
                     </div>
                     <div class="arrow-container" id="up-arrow-container-{{{ $snack->id }}}">
-                        <div class="arrow-up" data-id="{{{ $snack->id }}}"></div>
+                        @if ($snack->vote_value === 1)
+                            <div class="arrow-up selected" data-id="{{{ $snack->id }}}"></div>
+                        @else
+                            <div class="arrow-up" data-id="{{{ $snack->id }}}"></div>
+                        @endif
                         <div class="arrow-value">+{{{ $snack->upvotes }}}</div>
                     </div>
                 </div>
