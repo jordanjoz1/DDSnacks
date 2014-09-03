@@ -16,7 +16,7 @@ class CreateSnacksTable extends Migration {
 		{
 			$table->increments('id');
             $table->string('name')->unique();
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->integer('group_id')->unsigned();
             $table->integer('created_by')->unsigned();
             $table->integer('upvotes')->default(0);

@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Laravel and Angular Comment System</title>
+    <title>DD Snacks</title>
 
     <!-- CSS -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css"> <!-- load bootstrap via cdn -->
@@ -11,7 +11,6 @@
     <style>
         body 		{ padding-top:30px; }
         form 		{ padding-bottom:20px; }
-        .comment 	{ padding-bottom:20px; }
     </style>
 
     <style>
@@ -173,12 +172,12 @@
     <!-- ANGULAR -->
     <!-- all angular resources will be loaded from the /public folder -->
     <script src="js/controllers/mainCtrl.js"></script> <!-- load our controller -->
-    <script src="js/services/commentService.js"></script> <!-- load our service -->
+    <script src="js/services/snackService.js"></script> <!-- load our service -->
     <script src="js/app.js"></script> <!-- load our application -->
 
 </head>
 <!-- declare our angular app and controller -->
-<body class="container" ng-app="commentApp" ng-controller="mainController">
+<body class="container" ng-app="snackApp" ng-controller="mainController">
 <div class="col-md-8 col-md-offset-2">
 
     <!-- PAGE TITLE =============================================== -->
@@ -186,12 +185,12 @@
         <h2>DD Snacks</h2>
     </div>
 
-    <!-- NEW COMMENT FORM =============================================== -->
+    <!-- NEW SNACK FORM =============================================== -->
     <form ng-submit="submitSnack()"> <!-- ng-submit will disable the default form action and use our function -->
         <div class="entry input-group">
-            <input type="text" class="form-control input-lg" name="comment" ng-model="commentData.text" placeholder="Search or add a new snacky">
+            <input type="text" class="form-control input-lg" name="snack" ng-model="snackData.name" placeholder="Search or add a new snacky">
             <span class="input-group-btn">
-                <button class="btn btn-success btn-add btn-lg" type="button">
+                <button class="btn btn-success btn-add btn-lg" type="submit">
                     <span class="glyphicon glyphicon-plus"></span>
                 </button>
             </span>
@@ -202,9 +201,9 @@
     <!-- show loading icon if the loading variable is set to true -->
     <p class="text-center" ng-show="loading"><span class="fa fa-meh-o fa-5x fa-spin"></span></p>
 
-    <!-- THE COMMENTS =============================================== -->
-    <!-- hide these comments if the loading variable is true -->
-    <div class="snack-list-item" ng-hide="loading" ng-repeat="snack in snacks | filter:commentData.text">
+    <!-- THE SNACKS =============================================== -->
+    <!-- hide these cnacks if the loading variable is true -->
+    <div class="snack-list-item" ng-hide="loading" ng-repeat="snack in snacks | filter:snackData.name">
         <div class="arrow-container">
             <div ng-class="snack.vote_value == -1 ? 'arrow-down selected' : 'arrow-down'"></div>
             <div class="arrow-value">-{{ snack.downvotes }}</div>
