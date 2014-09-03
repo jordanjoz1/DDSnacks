@@ -27,7 +27,7 @@ class HomeController extends BaseController {
             ->select('snacks.*', 'votes.value as vote_value')
             ->get();
 
-        return View::make('main')->with('snacks', $snacks);
+        return View::make('index')->with('snacks', $snacks);
     }
     
     public function doLogout()

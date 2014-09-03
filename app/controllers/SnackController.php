@@ -9,26 +9,23 @@ class SnackController extends \BaseController {
 	 */
 	public function index()
 	{
-		$snacks = Snack::where('created_by', Auth::user()->id)->get();
+        // get snacks
+        $snacks = DB::table('snacks')
+            ->leftJoin('votes', function($join)
+            {
+                $join->on('snacks.id', '=', 'votes.snack_id')
+                    ->where('votes.user_id', '=', Auth::user()->id);
+            })
+            ->select('snacks.*', 'votes.value as vote_value')
+            ->get();
+
         
         return Response::json(array(
             'error' => false,
-            'snacks' => $snacks->toArray()),
+            'snacks' => $snacks),
             200
         );
 	}
-
-
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		//
-	}
-
 
 	/**
 	 * Store a newly created resource in storage.
@@ -74,48 +71,6 @@ class SnackController extends \BaseController {
             200
         );
 	}
-
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
-
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		$snack = Snack::where('created_by', Auth::user()->id)->find($id);
-        
-        if (Request::get('name'))
-        {
-            $snack->name = Request::get('name');
-        }
-        
-        if (Request::get('description'))
-        {
-            $snack->description = Request::get('description');
-        }
-        
-        $snack->save();
-        
-        return Response::json(array(
-            'error' => false,
-            'message' => 'snack updated'),
-            200
-        );
-            
-    }
         
 	/**
 	 * Remove the specified resource from storage.
