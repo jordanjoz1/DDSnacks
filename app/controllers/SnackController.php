@@ -35,12 +35,26 @@ class SnackController extends \BaseController {
 	 */
 	public function store()
 	{
+        // validate user input
+        $rules = array(
+            'name'    => 'required',
+            'description' => ''
+        );
+        $validator = Validator::make(Input::all(), $rules);
+        if($validator->fails())
+        {
+            $errors = $validator->errors();
+            return Response::json(array(
+                    'error' => true,
+                    'snack' => $errors->toArray()),
+                200
+            );
+        }
+
 		$snack = new Snack;
         $snack->name = Request::get('name');
         $snack->description = Request::get('description');
         $snack->created_by = Auth::user()->id;
-        
-        // validation and filtering?
         
         $snack->save();
         

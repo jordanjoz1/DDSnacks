@@ -44,24 +44,21 @@ angular.module('mainCtrl', [])
 
             // clear input
             $scope.snackData.name = null;
-        };
+        }
+    })
+    // inject the Snack service into our controller
+    .controller('voteController', function($scope, $http, Vote) {
 
         $scope.vote = function(snackId, value) {
 
-            $scope.loading = true;
-
             Vote.save({id: snackId, value: value})
                 .success(function(data) {
-                    Snack.get()
-                        .success(function(data) {
-                            $scope.snacks = data.snacks;
-                            $scope.loading = false;
-                        });
+                    $scope.snacks = data.snack;
 
                 })
                 .error(function(data) {
                     console.log(data);
                 });
-        };
+        }
 
     });

@@ -204,7 +204,7 @@
 
     <!-- THE SNACKS =============================================== -->
     <!-- hide these cnacks if the loading variable is true -->
-    <div class="snack-list-item" ng-hide="loading" ng-repeat="snack in snacks | filter:snackData.name"">
+    <div class="snack-list-item" ng-hide="loading" ng-repeat="snack in snacks | filter:snackData.name"  ng-controller="voteController">
         <div class="arrow-container">
             <div ng-class="snack.vote_value == -1 ? 'arrow-down selected' : 'arrow-down'" ng-click="vote(snack.id, -1)"></div>
             <div class="arrow-value">-{{ snack.downvotes }}</div>
