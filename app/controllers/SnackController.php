@@ -16,7 +16,8 @@ class SnackController extends \BaseController {
                 $join->on('snacks.id', '=', 'votes.snack_id')
                     ->where('votes.user_id', '=', Auth::user()->id);
             })
-            ->select('snacks.*', 'votes.value as vote_value')
+            ->select('snacks.*', 'votes.value as vote_value', DB::raw('snacks.upvotes - snacks.downvotes as sum_votes'))
+            ->orderBy('sum_votes', 'desc')
             ->get();
 
         

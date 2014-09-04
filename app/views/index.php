@@ -173,6 +173,7 @@
     <!-- all angular resources will be loaded from the /public folder -->
     <script src="js/controllers/mainCtrl.js"></script> <!-- load our controller -->
     <script src="js/services/snackService.js"></script> <!-- load our service -->
+    <script src="js/services/voteService.js"></script> <!-- load our service -->
     <script src="js/app.js"></script> <!-- load our application -->
 
 </head>
@@ -203,17 +204,17 @@
 
     <!-- THE SNACKS =============================================== -->
     <!-- hide these cnacks if the loading variable is true -->
-    <div class="snack-list-item" ng-hide="loading" ng-repeat="snack in snacks | filter:snackData.name">
+    <div class="snack-list-item" ng-hide="loading" ng-repeat="snack in snacks | filter:snackData.name"">
         <div class="arrow-container">
-            <div ng-class="snack.vote_value == -1 ? 'arrow-down selected' : 'arrow-down'"></div>
+            <div ng-class="snack.vote_value == -1 ? 'arrow-down selected' : 'arrow-down'" ng-click="vote(snack.id, -1)"></div>
             <div class="arrow-value">-{{ snack.downvotes }}</div>
         </div>
         <div class="snack-list-item-text-container">
-            <div class="snack-list-item_text name">{{ snack.name }} ({{ snack.upvotes - snack.downvotes }})
+            <div class="snack-list-item_text name">{{ snack.name }} ({{ snack.sum_votes }})
             </div>
         </div>
         <div class="arrow-container"">
-            <div ng-class="snack.vote_value == 1 ? 'arrow-up selected' : 'arrow-up'"></div>
+            <div ng-class="snack.vote_value == 1 ? 'arrow-up selected' : 'arrow-up'" ng-click="vote(snack.id, 1)"></div>
             <div class="arrow-value">+{{ snack.upvotes }}</div>
         </div>
     </div>

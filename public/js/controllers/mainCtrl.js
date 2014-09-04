@@ -46,4 +46,22 @@ angular.module('mainCtrl', [])
             $scope.snackData.name = null;
         };
 
+        $scope.vote = function(snackId, value) {
+
+            $scope.loading = true;
+
+            Vote.save({id: snackId, value: value})
+                .success(function(data) {
+                    Snack.get()
+                        .success(function(data) {
+                            $scope.snacks = data.snacks;
+                            $scope.loading = false;
+                        });
+
+                })
+                .error(function(data) {
+                    console.log(data);
+                });
+        };
+
     });
