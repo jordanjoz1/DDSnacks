@@ -46,15 +46,23 @@ angular.module('mainCtrl', [])
             $scope.snackData.name = null;
         }
     })
-    // inject the Snack service into our controller
+    // inject the Vote service into our controller
     .controller('voteController', function($scope, $http, Vote) {
 
         $scope.vote = function(snackId, value) {
 
             Vote.save({id: snackId, value: value})
                 .success(function(data) {
-                    $scope.snacks = data.snack;
-
+                    if (!data.error) {
+                        for (index = 0; index < $scope.snacks.length; index++ ){
+                            if ($scope.snacks[index].id == data.snack.id) {
+                                snack = data.snack;
+                                snack.sum_votes = snack.upvotes - snack.downvotes;
+                                snack.vote_value = value;
+                                $scope.snacks[index] = snack;
+                            }
+                        }
+                    }
                 })
                 .error(function(data) {
                     console.log(data);

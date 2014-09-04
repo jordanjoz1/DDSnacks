@@ -210,7 +210,7 @@
             <div class="arrow-value">-{{ snack.downvotes }}</div>
         </div>
         <div class="snack-list-item-text-container">
-            <div class="snack-list-item_text name">{{ snack.name }} ({{ snack.sum_votes }})
+            <div ng-class="snack-list-item-text">{{ snack.name }} ({{ snack.sum_votes }})
             </div>
         </div>
         <div class="arrow-container"">
