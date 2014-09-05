@@ -3,6 +3,9 @@ angular.module('mainCtrl', [])
 
     // inject the Snack service into our controller
     .controller('mainController', function($scope, $http, Snack) {
+        // object to hold selected group
+        $scope.selected = {};
+
         // object to hold all the data for the new snack form
         $scope.snackData = {};
 
@@ -22,19 +25,19 @@ angular.module('mainCtrl', [])
         // SAVE A SNACK ======================================================
         $scope.submitSnack = function() {
 
-            $scope.loading = true;
+            // set group id
+            $scope.snackData.group_id = $scope.selected.group.id;
 
             // save the snack. pass in snack data from the form
             // use the function we created in our service
             Snack.save($scope.snackData)
                 .success(function(data) {
-
-                    // if successful, we'll need to refresh the snack list
-                    Snack.get()
-                        .success(function(data) {
-                            $scope.snacks = data.snacks;
-                            $scope.loading = false;
-                        });
+                    // add snack to list
+                    snack = data.snack;
+                    console.log(snack);
+                    snack.sum_votes = snack.upvotes - snack.downvotes;
+                    snack.vote_value = 0;
+                    $scope.snacks.push(snack);
 
                 })
                 .error(function(data) {
@@ -68,5 +71,15 @@ angular.module('mainCtrl', [])
                     console.log(data);
                 });
         }
+
+    })
+
+    // inject the Group service into our controller
+    .controller('groupController', function($scope, $http, Group) {
+
+        Group.get()
+            .success(function(data) {
+                $scope.groups = data.groups;
+            });
 
     });

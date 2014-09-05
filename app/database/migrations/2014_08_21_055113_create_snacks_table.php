@@ -15,13 +15,14 @@ class CreateSnacksTable extends Migration {
 		Schema::create('snacks', function(Blueprint $table)
 		{
 			$table->increments('id');
-            $table->string('name')->unique();
+            $table->string('name');
             $table->string('description')->nullable();
             $table->integer('group_id')->unsigned();
             $table->integer('created_by')->unsigned();
             $table->integer('upvotes')->default(0);
             $table->integer('downvotes')->default(0);
             $table->timestamps();
+            $table->unique( array('name','group_id') );
 		});
         
         Schema::table('snacks', function($table) {

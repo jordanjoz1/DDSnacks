@@ -17,7 +17,7 @@ class SnackController extends \BaseController {
                     ->where('votes.user_id', '=', Auth::user()->id);
             })
             ->select('snacks.*', 'votes.value as vote_value', DB::raw('snacks.upvotes - snacks.downvotes as sum_votes'))
-            ->orderBy('sum_votes', 'desc')
+            //->orderBy('sum_votes', 'desc')
             ->get();
 
         
@@ -38,7 +38,8 @@ class SnackController extends \BaseController {
         // validate user input
         $rules = array(
             'name'    => 'required',
-            'description' => ''
+            'description' => '',
+            'group_id' => 'required'
         );
         $validator = Validator::make(Input::all(), $rules);
         if($validator->fails())
@@ -54,13 +55,16 @@ class SnackController extends \BaseController {
 		$snack = new Snack;
         $snack->name = Request::get('name');
         $snack->description = Request::get('description');
+        $snack->group_id = Request::get('group_id');
         $snack->created_by = Auth::user()->id;
+        $snack->upvotes = 0;
+        $snack->downvotes = 0;
         
         $snack->save();
         
         return Response::json(array(
             'error' => false,
-            'snacks' => $snack->toArray()),
+            'snack' => $snack->toArray()),
             200
         );
 	}

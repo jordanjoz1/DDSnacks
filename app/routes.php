@@ -35,6 +35,11 @@ Route::group(array('prefix' => 'api/v1', 'before' => 'auth.basic'), function()
     Route::resource('vote', 'VoteController');
 });
 
+Route::group(array('prefix' => 'api/v1', 'before' => 'auth.basic'), function()
+{
+    Route::resource('group', 'groupController');
+});
+
 Route::controller('users', 'UsersController');
 
 Route::get('login', array('uses' => 'UsersController@login'));
