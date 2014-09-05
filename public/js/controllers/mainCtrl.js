@@ -80,6 +80,8 @@ angular.module('mainCtrl', [])
         Group.get()
             .success(function(data) {
                 $scope.groups = data.groups;
+                // automatically select the first group
+                $scope.selected.group = data.groups[0];
             });
 
     });
