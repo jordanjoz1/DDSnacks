@@ -1,24 +1,33 @@
 @extends('layouts.default')
 @section('content')
-	{{ Form::open(array('url' => 'login')) }}
+    <div class="col-md-8 col-md-offset-2">
 
-		<!-- if there are login errors, show them here -->
-		<p>
-			{{ $errors->first('email') }}
-			{{ $errors->first('password') }}
-		</p>
+        <!-- PAGE TITLE =============================================== -->
+        <div class="page-header">
+            <h2>DD Snacks</h2>
+        </div>
 
-		<p>
-			{{ Form::label('email', 'Email Address') }}
-			{{ Form::text('email', Input::old('email'), array('placeholder' => 'you@doubledutch.me')) }}
-		</p>
+        {{ Form::open(array('url' => 'login', 'role' => 'form', 'class' => 'form-horizontal')) }}
 
-		<p>
-			{{ Form::label('password', 'Password') }}
-			{{ Form::password('password') }}
-		</p>
+            <!-- if there are login errors, show them here -->
+            <div class="form-group">
+                {{ $errors->first('email') }}
+                {{ $errors->first('password') }}
+            </div>
 
-		<p>{{ Form::submit('Submit!') }}</p>
-	{{ Form::close() }}
+            <div class="form-group">
+                {{ Form::label('email', 'Email Address') }}
+                {{ Form::text('email', Input::old('email'), array('placeholder' => 'you@doubledutch.me')) }}
+            </div>
+
+            <div class="form-group">
+                {{ Form::label('password', 'Password') }}
+                {{ Form::password('password') }}
+            </div>
+
+            <p>{{ Form::submit('Submit!', array('class' => 'btn btn-default')) }}</p>
+        {{ Form::close() }}
+
+    </div>
 @stop
 

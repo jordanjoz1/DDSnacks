@@ -4,14 +4,12 @@
     @include('includes.head')
 </head>
 <body>
-<div data-role="page">
+<div class="container">
 
-  @include('includes.header')
-  
-    <div data-role="main" class="ui-content">
-			@yield('content')
-    </div>
-    
+    @include('includes.header')
+
+    @yield('content')
+
     @include('includes.footer')
 </div>
 </body>
