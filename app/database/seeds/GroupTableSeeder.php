@@ -13,15 +13,23 @@ class GroupTableSeeder extends Seeder {
         
         Group::create(array(
             'name' => '8th Floor Engineering',
-            'description' => 'Test description',
+            'description' => '',
+            'created_by' => 1,
+        ));
+
+        Group::create(array(
+            'name' => '8th Floor Kitchen',
+            'description' => '',
             'created_by' => 1,
         ));
         
         Group::create(array(
             'name' => '3rd Floor Garage',
-            'description' => '3rd floor description',
+            'description' => '',
             'created_by' => 1,
         ));
+
+
 	}
 
 }

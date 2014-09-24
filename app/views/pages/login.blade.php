@@ -28,6 +28,9 @@
             <p>{{ Form::submit('Submit!', array('class' => 'btn btn-default')) }}</p>
         {{ Form::close() }}
 
+    <p>Or <a href="/signup">create an account</a></p>
+
     </div>
+
 @stop
 

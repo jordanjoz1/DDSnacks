@@ -19,7 +19,7 @@
 
             <p>
                 {{ Form::label('email', 'Email Address') }}
-                {{ Form::text('email', Input::old('email'), array('placeholder' => 'awesome@doubledutch.me')) }}
+                {{ Form::text('email', Input::old('email'), array('placeholder' => 'you@doubledutch.me')) }}
             </p>
 
             <p>
@@ -33,6 +33,8 @@
 
             <p>{{ Form::submit('Submit!') }}</p>
         {{ Form::close() }}
+
+        <p>Or <a href="/login">login</a></p>
     </div>
 @stop
 

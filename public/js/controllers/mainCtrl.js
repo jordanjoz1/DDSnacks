@@ -17,6 +17,10 @@ angular.module('mainCtrl', [])
         // GET ALL SNACKS ====================================================
         Snack.get()
             .success(function(data) {
+                // calculate sum of votes
+                for (var i in data.snacks) {
+                    data.snacks[i].sum_votes = data.snacks[i].upvotes - data.snacks[i].downvotes;
+                }
                 $scope.snacks = data.snacks;
                 $scope.loading = false;
             });
@@ -34,11 +38,9 @@ angular.module('mainCtrl', [])
                 .success(function(data) {
                     // add snack to list
                     snack = data.snack;
-                    console.log(snack);
                     snack.sum_votes = snack.upvotes - snack.downvotes;
                     snack.vote_value = 0;
                     $scope.snacks.push(snack);
-
                 })
                 .error(function(data) {
                     console.log(data);
