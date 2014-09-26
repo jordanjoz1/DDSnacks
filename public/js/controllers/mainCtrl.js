@@ -3,6 +3,31 @@ angular.module('mainCtrl', [])
 
     // inject the Snack service into our controller
     .controller('mainController', function($scope, $http, Snack) {
+
+        // sort by controvery rating
+        $scope.Math = window.Math;
+        $scope.controversySort = function(snack) {
+            if (snack.upvotes <= 0 || snack.downvotes <=0) {
+                return 0;
+            }
+            // maximize total votes relative to difference in points, and adjust slightly for total votes
+            // this seems better for a smaller number of votes
+            total = parseInt(snack.upvotes) + parseInt(snack.downvotes);
+            return ((total + 1) / (Math.abs(snack.upvotes - snack.downvotes) + 1)) * Math.sqrt(total);
+        };
+        // alternative Reddit algorithm
+        $scope.redditControversySort = function(snack) {
+            if (snack.upvotes <= 0 || snack.downvotes <=0) {
+                return 0;
+            }
+            // maximize for number of votes and a close ratio between the number of upvotes and downvotes
+            return (parseInt(snack.upvotes) + parseInt(snack.downvotes)) / (Math.max(snack.upvotes, snack.downvotes) / Math.min(snack.upvotes, snack.downvotes));
+        }
+
+        // set default sort values
+        $scope.predicate = 'sum_votes';
+        $scope.reverse = true;
+
         // object to hold selected group
         $scope.selected = {};
 

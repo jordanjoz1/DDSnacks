@@ -17,6 +17,7 @@
 
     <!-- JS -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.min.js"></script>
 
     <!-- ANGULAR -->
@@ -35,6 +36,10 @@
             <h2>DD Snacks</h2>
         </div>
 
+        <!-- LOADING ICON =============================================== -->
+        <!-- show loading icon if the loading variable is set to true -->
+        <p class="text-center" data-ng-show="loading"><span class="fa fa-meh-o fa-5x fa-spin"></span></p>
+
         <!-- NEW SNACK FORM =============================================== -->
         <form data-ng-submit="submitSnack()" data-ng-hide="loading">
             <!-- ng-submit will disable the default form action and use our function -->
@@ -51,16 +56,23 @@
                 </button>
             </span>
             </div>
+            <br/>
+            <div class="btn-group btn-group-sm btn-group-justified" data-toggle="buttons">
+                <label class="btn btn-default active" ng-click="predicate = 'sum_votes'; reverse=true">
+                    <input type="radio" name="options" id="option1" checked>Popular
+                </label>
+                <label class="btn btn-default" ng-click="predicate = controversySort; reverse=true">
+                    <input type="radio" name="options" id="option2">Controversial
+                </label>
+            </div>
         </form>
 
-        <!-- LOADING ICON =============================================== -->
-        <!-- show loading icon if the loading variable is set to true -->
-        <p class="text-center" data-ng-show="loading"><span class="fa fa-meh-o fa-5x fa-spin"></span></p>
+
 
         <!-- THE SNACKS =============================================== -->
         <!-- hide these cnacks if the loading variable is true -->
         <div class="snack-list-item" data-ng-hide="loading"
-             data-ng-repeat="snack in snacks | filter:snackData.name | filter:{group_id:selected.group.id} | orderBy: 'sum_votes':true"
+             data-ng-repeat="snack in snacks | filter:snackData.name | filter:{group_id:selected.group.id} | orderBy: predicate:reverse"
              data-ng-controller="voteController">
             <div class="arrow-container">
                 <div data-ng-class="snack.vote_value == -1 ? 'arrow-down selected' : 'arrow-down'"
