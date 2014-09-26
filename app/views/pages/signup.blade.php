@@ -8,19 +8,19 @@
             <h2>DD Snacks</h2>
         </div>
 
-        {{ Form::open(array('url' => 'users/create', 'class' => 'form-group')) }}
+        {{ Form::open(array('url' => 'users/create', 'role' => 'form', 'class' => 'form-horizontal')) }}
 
             <!-- if there are login errors, show them here -->
             <p>
                 {{ $errors->first('email') }}
             </p>
 
-            <p>
-                {{ Form::label('email', 'Email Address') }}
-                {{ Form::text('email', Input::old('email'), array('placeholder' => 'you@doubledutch.me')) }}
-            </p>
+            <div class="form-group">
+                {{ Form::label('email', 'Email Address', array('class' => 'control-label')) }}
+                {{ Form::text('email', Input::old('email'), array('placeholder' => 'you@doubledutch.me', 'class' => 'form-control')) }}
+            </div>
 
-            <p>{{ Form::submit('Submit!') }}</p>
+            <p>{{ Form::submit('Get snacking!', array('class' => 'btn btn-default')) }}</p>
         {{ Form::close() }}
 
         <p>Or <a href="/login">login</a></p>
