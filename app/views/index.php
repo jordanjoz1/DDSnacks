@@ -26,6 +26,8 @@
     <script src="js/services/voteService.js"></script>
     <script src="js/services/groupService.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/libs/bootstrap-maxlength.min.js"></script>
+
 </head>
 <body class="container" data-ng-app="snackApp" data-ng-controller="mainController">
 <div data-ng-controller="groupController">
@@ -49,7 +51,7 @@
             <br/>
             <div class="entry input-group">
                 <input type="text" class="form-control input-lg" name="snack" data-ng-model="snackData.name"
-                       placeholder="Search or add a new snack"/>
+                       placeholder="Search or add a new snack" maxlength="50" id="snack-input"/>
             <span class="input-group-btn">
                 <button class="btn btn-success btn-add btn-lg" type="submit">
                     <span class="glyphicon glyphicon-plus"></span>
@@ -73,20 +75,27 @@
         <!-- hide these cnacks if the loading variable is true -->
         <div class="snack-list-item" data-ng-hide="loading"
              data-ng-repeat="snack in snacks | filter:snackData.name | filter:{group_id:selected.group.id} | orderBy: predicate:reverse"
-             data-ng-controller="voteController">
-            <div class="arrow-container">
-                <div data-ng-class="snack.vote_value == -1 ? 'arrow-down selected' : 'arrow-down'"
-                     data-ng-click="vote(snack.id, -1)"></div>
-                <div class="arrow-value">-{{ snack.downvotes }}</div>
-            </div>
-            <div class="snack-list-item-text-container">
-                <div data-ng-class="snack-list-item-text">{{ snack.name }} ({{ snack.sum_votes }})
+             data-ng-controller="voteController" data-toggle="collapse" data-target="#comments-{{ snack.id }}">
+            <div >
+                <div class="arrow-container">
+                    <div data-ng-class="snack.vote_value == -1 ? 'arrow-down selected' : 'arrow-down'"
+                         data-ng-click="vote(snack.id, -1)"></div>
+                    <div class="arrow-value">-{{ snack.downvotes }}</div>
+                </div>
+                <div class="snack-list-item-text-container">
+                    <div data-ng-class="snack-list-item-text" >{{ snack.name }} ({{ snack.sum_votes }})
+                    </div>
+                    <div class="snack-list-item-subtitle" >{{ snack.comments.length }} comments
+                    </div>
+                </div>
+                <div class="arrow-container">
+                    <div data-ng-class="snack.vote_value == 1 ? 'arrow-up selected' : 'arrow-up'"
+                         data-ng-click="vote(snack.id, 1)"></div>
+                    <div class="arrow-value">+{{ snack.upvotes }}</div>
                 </div>
             </div>
-            <div class="arrow-container">
-                <div data-ng-class="snack.vote_value == 1 ? 'arrow-up selected' : 'arrow-up'"
-                     data-ng-click="vote(snack.id, 1)"></div>
-                <div class="arrow-value">+{{ snack.upvotes }}</div>
+            <div class="collapse" id="comments-{{ snack.id }}">
+                <div  data-ng-repeat="comment in snack.comments"><div class="username">{{ comment.user.email.split('@')[0] }}</div>: {{ comment.comment }}</div>
             </div>
         </div>
     </div>

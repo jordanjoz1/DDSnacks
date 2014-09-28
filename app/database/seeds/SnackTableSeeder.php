@@ -26,6 +26,31 @@ class SnackTableSeeder extends Seeder {
             'created_by' => 1,
             'group_id' => 2,
         ));
+
+        Snack::create(array(
+            'name' => 'Odwalla',
+            'created_by' => 1,
+            'group_id' => 1,
+            'upvotes' => 11,
+            'downvotes' => 1,
+        ));
+
+
+        Snack::create(array(
+            'name' => 'Coconut water',
+            'created_by' => 1,
+            'group_id' => 1,
+            'upvotes' => 5,
+            'downvotes' => 5,
+        ));
+
+        Snack::create(array(
+            'name' => 'Salt and vinegar chips',
+            'created_by' => 2,
+            'group_id' => 1,
+            'upvotes' => 9,
+            'downvotes' => 0,
+        ));
 	}
 
 }

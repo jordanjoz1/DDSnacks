@@ -10,7 +10,7 @@ class SnackController extends \BaseController {
 	public function index()
 	{
         // get snacks
-        $snacks = DB::table('snacks')
+        $snacks = Snack::with('comments', 'comments.user')
             ->leftJoin('votes', function($join)
             {
                 $join->on('snacks.id', '=', 'votes.snack_id')
@@ -19,7 +19,6 @@ class SnackController extends \BaseController {
             ->select('snacks.*', 'votes.value as vote_value')
             ->get();
 
-        
         return Response::json(array(
             'error' => false,
             'snacks' => $snacks),
@@ -36,7 +35,7 @@ class SnackController extends \BaseController {
 	{
         // validate user input
         $rules = array(
-            'name'    => 'required',
+            'name'    => 'required|max:50',
             'description' => '',
             'group_id' => 'required'
         );

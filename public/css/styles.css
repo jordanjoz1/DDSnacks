@@ -54,6 +54,11 @@ h1 {
     border-bottom: 1px solid #aaa;;
 }
 
+.snack-list-item-subtitle {
+    color: #4288CE;
+    font-size: smaller;
+}
+
 .arrow-up {
     height: 0;
     width: 20px;
@@ -98,10 +103,15 @@ h1 {
 .arrow-container {
     display: inline-block;
     position: relative;
-    width: 15%%;
+    width: 15%;
 }
 
 .arrow-value {
+}
+
+.username {
+    display: inline-block;
+    color: #555555;
 }
 
 .snack-list-item-text-container {

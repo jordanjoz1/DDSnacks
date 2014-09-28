@@ -17,7 +17,6 @@ class CreateUsersTable extends Migration {
 			$table->increments('id');
             $table->string('email')->unique();
             $table->string('password');
-            $table->integer('remaining_votes')->default(5);
             $table->timestamps();
             $table->rememberToken();
 		});

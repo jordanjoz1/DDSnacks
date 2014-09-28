@@ -15,6 +15,16 @@ class UserTableSeeder extends Seeder {
             'email' => 'jordan@doubledutch.me',
             'password' => Hash::make('321')
         ));
+
+        User::create(array(
+            'email' => 'test1@doubledutch.me',
+            'password' => Hash::make('321')
+        ));
+
+        User::create(array(
+            'email' => 'test3@doubledutch.me',
+            'password' => Hash::make('321')
+        ));
 	}
 
 }
