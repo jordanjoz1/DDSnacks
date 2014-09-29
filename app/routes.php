@@ -37,7 +37,12 @@ Route::group(array('prefix' => 'api/v1', 'before' => 'auth.basic'), function()
 
 Route::group(array('prefix' => 'api/v1', 'before' => 'auth.basic'), function()
 {
-    Route::resource('group', 'groupController');
+    Route::resource('group', 'GroupController');
+});
+
+Route::group(array('prefix' => 'api/v1', 'before' => 'auth.basic'), function()
+{
+    Route::resource('comment', 'CommentController');
 });
 
 Route::controller('users', 'UsersController');

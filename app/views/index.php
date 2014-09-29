@@ -25,6 +25,7 @@
     <script src="js/services/snackService.js"></script>
     <script src="js/services/voteService.js"></script>
     <script src="js/services/groupService.js"></script>
+    <script src="js/services/commentService.js"></script>
     <script src="js/app.js"></script>
     <script src="js/libs/bootstrap-maxlength.min.js"></script>
 
@@ -52,18 +53,18 @@
             <div class="entry input-group">
                 <input type="text" class="form-control input-lg" name="snack" data-ng-model="snackData.name"
                        placeholder="Search or add a new snack" maxlength="50" id="snack-input"/>
-            <span class="input-group-btn">
-                <button class="btn btn-success btn-add btn-lg" type="submit">
-                    <span class="glyphicon glyphicon-plus"></span>
-                </button>
-            </span>
+                <span class="input-group-btn">
+                    <button class="btn btn-success btn-add btn-lg" type="submit">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                </span>
             </div>
             <br/>
             <div class="btn-group btn-group-sm btn-group-justified" data-toggle="buttons">
-                <label class="btn btn-default active" ng-click="predicate = 'sum_votes'; reverse=true">
+                <label class="btn btn-default active" data-ng-click="predicate = 'sum_votes'; reverse=true">
                     <input type="radio" name="options" id="option1" checked>Popular
                 </label>
-                <label class="btn btn-default" ng-click="predicate = controversySort; reverse=true">
+                <label class="btn btn-default" data-ng-click="predicate = controversySort; reverse=true">
                     <input type="radio" name="options" id="option2">Controversial
                 </label>
             </div>
@@ -75,14 +76,14 @@
         <!-- hide these cnacks if the loading variable is true -->
         <div class="snack-list-item" data-ng-hide="loading"
              data-ng-repeat="snack in snacks | filter:snackData.name | filter:{group_id:selected.group.id} | orderBy: predicate:reverse"
-             data-ng-controller="voteController" data-toggle="collapse" data-target="#comments-{{ snack.id }}">
+             data-ng-controller="voteController" >
             <div >
                 <div class="arrow-container">
                     <div data-ng-class="snack.vote_value == -1 ? 'arrow-down selected' : 'arrow-down'"
                          data-ng-click="vote(snack.id, -1)"></div>
                     <div class="arrow-value">-{{ snack.downvotes }}</div>
                 </div>
-                <div class="snack-list-item-text-container">
+                <div class="snack-list-item-text-container" data-toggle="collapse" data-target="#comments-{{ snack.id }}">
                     <div data-ng-class="snack-list-item-text" >{{ snack.name }} ({{ snack.sum_votes }})
                     </div>
                     <div class="snack-list-item-subtitle" >{{ snack.comments.length }} comments
@@ -94,8 +95,21 @@
                     <div class="arrow-value">+{{ snack.upvotes }}</div>
                 </div>
             </div>
-            <div class="collapse" id="comments-{{ snack.id }}">
-                <div  data-ng-repeat="comment in snack.comments"><div class="username">{{ comment.user.email.split('@')[0] }}</div>: {{ comment.comment }}</div>
+            <div class="collapse" id="comments-{{ snack.id }}" >
+                <div  data-ng-repeat="comment in snack.comments" data-toggle="collapse" data-target="#comments-{{ snack.id }}">
+                    <div class="col-md-4 username text-right">{{ comment.user.email.split('@')[0].split('+')[0] }}</div>
+                    <div class="col-md-8 text-left">{{ comment.comment }} <div class="timestamp" >1min ago</div></div>
+                </div>
+                <form data-ng-submit="submitComment(snack.id)" data-ng-controller="commentController" class="comment-form">
+                    <div class="input-group comment-input-group">
+                        <input type="text" class="form-control input-sm comment-input" placeholder="Write a comment" maxlength="500" ng-model="commentText"/>
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary btn-add btn-sm" type="submit">
+                                <span class="glyphicon glyphicon-send"></span>
+                            </button>
+                        </span>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

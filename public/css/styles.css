@@ -54,6 +54,10 @@ h1 {
     border-bottom: 1px solid #aaa;;
 }
 
+.snack-list-item:hover, .snack-list-item:focus {
+    background-color: rgba(192,192,192,0.1);
+}
+
 .snack-list-item-subtitle {
     color: #4288CE;
     font-size: smaller;
@@ -112,6 +116,29 @@ h1 {
 .username {
     display: inline-block;
     color: #555555;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.timestamp {
+    display: inline-block;
+    font-size: smaller;
+    color: #C6C6C6;
+}
+
+.comment-input-group {
+    width: 60%;
+    margin: auto;
+}
+
+.comment-form {
+    padding-bottom: 0px;
 }
 
 .snack-list-item-text-container {

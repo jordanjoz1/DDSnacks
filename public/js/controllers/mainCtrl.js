@@ -87,9 +87,12 @@ angular.module('mainCtrl', [])
                         for (index = 0; index < $scope.snacks.length; index++ ){
                             if ($scope.snacks[index].id == data.snack.id) {
                                 snack = data.snack;
-                                snack.sum_votes = snack.upvotes - snack.downvotes;
-                                snack.vote_value = value;
-                                $scope.snacks[index] = snack;
+                                // only update vote values
+                                $scope.snacks[index].sum_votes = snack.upvotes - snack.downvotes;
+                                $scope.snacks[index].vote_value = value;
+                                $scope.snacks[index].upvotes = snack.upvotes;
+                                $scope.snacks[index].downvotes = snack.downvotes;
+                                break;
                             }
                         }
                     }
@@ -110,5 +113,35 @@ angular.module('mainCtrl', [])
                 // automatically select the first group
                 $scope.selected.group = data.groups[0];
             });
+
+    })
+
+    // inject the comment service into our controller
+    .controller('commentController', function($scope, $http, Comment) {
+
+        $scope.submitComment = function(snackId) {
+
+            // save the snack. pass in snack data from the form
+            // use the function we created in our service
+            Comment.save({id: snackId, comment: $scope.commentText})
+                .success(function(data) {
+                    if (!data.error) {
+                        // add to snack's comments
+                        for (index = 0; index < $scope.snacks.length; index++ ){
+                            if ($scope.snacks[index].id == data.comment.snack_id) {
+                                $scope.snacks[index].comments.push(data.comment);
+                                break;
+                            }
+                        }
+                    }
+                })
+                .error(function(data) {
+                    console.log(data);
+                });
+
+
+            // clear input
+            $scope.commentText = null;
+        }
 
     });
