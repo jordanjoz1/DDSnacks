@@ -98,7 +98,7 @@
             <div class="collapse" id="comments-{{ snack.id }}" >
                 <div  data-ng-repeat="comment in snack.comments" data-toggle="collapse" data-target="#comments-{{ snack.id }}">
                     <div class="col-md-4 username text-right">{{ comment.user.email.split('@')[0].split('+')[0] }}</div>
-                    <div class="col-md-8 text-left">{{ comment.comment }} <div class="timestamp" >1min ago</div></div>
+                    <div class="col-md-8 text-left">{{ comment.comment }} <div class="timestamp">{{ timeSince(comment.created_at) }}</div></div>
                 </div>
                 <form data-ng-submit="submitComment(snack.id)" data-ng-controller="commentController" class="comment-form">
                     <div class="input-group comment-input-group">

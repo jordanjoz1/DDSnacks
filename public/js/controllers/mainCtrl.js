@@ -24,6 +24,36 @@ angular.module('mainCtrl', [])
             return (parseInt(snack.upvotes) + parseInt(snack.downvotes)) / (Math.max(snack.upvotes, snack.downvotes) / Math.min(snack.upvotes, snack.downvotes));
         }
 
+        $scope.timeSince = function timeSince(date) {
+
+            date = Date.parse(date + " GMT");
+
+            var seconds = Math.floor((new Date() - date) / 1000);
+
+            var interval = Math.floor(seconds / 31536000);
+
+            if (interval >= 1) {
+                return interval + "y";
+            }
+            interval = Math.floor(seconds / 2592000);
+            if (interval >= 1) {
+                return interval + "mon";
+            }
+            interval = Math.floor(seconds / 86400);
+            if (interval >= 1) {
+                return interval + "d";
+            }
+            interval = Math.floor(seconds / 3600);
+            if (interval >= 1) {
+                return interval + "h";
+            }
+            interval = Math.floor(seconds / 60);
+            if (interval >= 1) {
+                return interval + "m";
+            }
+            return Math.floor(seconds) + "s";
+        };
+
         // set default sort values
         $scope.predicate = 'sum_votes';
         $scope.reverse = true;
