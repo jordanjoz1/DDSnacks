@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DD Snacks</title>
 
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
     <!-- CSS -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
     <!-- load bootstrap via cdn -->
@@ -112,6 +114,7 @@
                 </form>
             </div>
         </div>
+        <div class="footer" data-ng-hide="loading"><a href="mailto:jordan@doubledutch.me?Subject=DD%20Snacks%20feedback">Send feedback</a></div>
     </div>
 </div>
 </body>

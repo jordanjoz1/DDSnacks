@@ -30,7 +30,9 @@
 
     <p>Or <a href="/signup">create an account</a></p>
 
+    <div class="footer"><a href="mailto:jordan@doubledutch.me?Subject=DD%20Snacks%20feedback">Send feedback</a></div>
     </div>
+
 
 @stop
 

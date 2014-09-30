@@ -24,6 +24,8 @@
         {{ Form::close() }}
 
         <p>Or <a href="/login">login</a></p>
+
+        <div class="footer"><a href="mailto:jordan@doubledutch.me?Subject=DD%20Snacks%20feedback">Send feedback</a></div>
     </div>
 @stop
 
