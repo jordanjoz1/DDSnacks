@@ -20,11 +20,6 @@ Validator::extend('DDEmail', function($attribute, $value, $parameters)
 
 Route::get('/', array('before' => 'auth', 'uses' => 'HomeController@showMainPage'));
 
-Route::get('/authtest', array('before' => 'auth.basic', function()
-{
-    return View::make('hello');
-}));
-
 Route::group(array('prefix' => 'api/v1', 'before' => 'auth.basic'), function()
 {
     Route::resource('snack', 'SnackController');
@@ -51,6 +46,4 @@ Route::get('login', array('uses' => 'UsersController@login'));
 
 Route::post('login', array('uses' => 'UsersController@postLogin'));
 
-Route::get('signup', array('uses' => 'UsersController@create'));
-
-Route::get('logout', array('uses' => 'HomeController@doLogout'));
+Route::get('logout', array('uses' => 'UsersController@logout'));

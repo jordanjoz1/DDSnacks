@@ -1,0 +1,579 @@
+-- phpMyAdmin SQL Dump
+-- version 2.11.11.3
+-- http://www.phpmyadmin.net
+--
+-- Host: 68.178.143.78
+-- Generation Time: Oct 04, 2014 at 10:38 PM
+-- Server version: 5.5.37
+-- PHP Version: 5.1.6
+
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+
+--
+-- Database: `ddsnacks`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `comments`
+--
+
+CREATE TABLE `comments` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `snack_id` int(10) unsigned NOT NULL,
+  `user_id` int(10) unsigned NOT NULL,
+  `comment` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`),
+  KEY `comments_snack_id_foreign` (`snack_id`),
+  KEY `comments_user_id_foreign` (`user_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
+
+--
+-- Dumping data for table `comments`
+--
+
+INSERT INTO `comments` VALUES(1, 26, 21, 'This is seriously my favorite!', '2014-09-30 05:17:17', '2014-09-30 05:17:17');
+INSERT INTO `comments` VALUES(2, 36, 21, 'why is this a font?!?!@ :P', '2014-09-30 05:19:18', '2014-09-30 05:19:18');
+INSERT INTO `comments` VALUES(3, 36, 50, 'hi garrett', '2014-09-30 15:39:10', '2014-09-30 15:39:10');
+INSERT INTO `comments` VALUES(4, 26, 21, 'Strawberry banana is the best', '2014-10-05 04:08:48', '2014-10-05 04:08:48');
+INSERT INTO `comments` VALUES(5, 27, 21, 'no logging out here :)', '2014-10-05 04:29:59', '2014-10-05 04:29:59');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `groups`
+--
+
+CREATE TABLE `groups` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `created_by` int(10) unsigned NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `groups_name_unique` (`name`),
+  KEY `groups_created_by_foreign` (`created_by`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `groups`
+--
+
+INSERT INTO `groups` VALUES(1, '8th Floor Engineering', 'Test description', 1, '2014-09-03 07:32:57', '2014-09-03 07:32:57');
+INSERT INTO `groups` VALUES(2, '3rd Floor Garage', '3rd floor description', 1, '2014-09-03 07:32:57', '2014-09-03 07:32:57');
+INSERT INTO `groups` VALUES(3, '8th Floor Hallway', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `migrations`
+--
+
+CREATE TABLE `migrations` (
+  `migration` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `migrations`
+--
+
+INSERT INTO `migrations` VALUES('2014_08_21_054958_create_users_table', 1);
+INSERT INTO `migrations` VALUES('2014_08_21_055113_create_snacks_table', 1);
+INSERT INTO `migrations` VALUES('2014_08_23_064352_create_groups_table', 1);
+INSERT INTO `migrations` VALUES('2014_08_23_064641_create_comments_table', 1);
+INSERT INTO `migrations` VALUES('2014_08_23_064755_create_votes_table', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `snacks`
+--
+
+CREATE TABLE `snacks` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `group_id` int(10) unsigned NOT NULL,
+  `created_by` int(10) unsigned NOT NULL,
+  `upvotes` int(11) NOT NULL DEFAULT '0',
+  `downvotes` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `snacks_name_unique` (`name`),
+  KEY `snacks_group_id_foreign` (`group_id`),
+  KEY `snacks_created_by_foreign` (`created_by`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=86 ;
+
+--
+-- Dumping data for table `snacks`
+--
+
+INSERT INTO `snacks` VALUES(32, 'Mike''s Hard Lemonade', NULL, 1, 27, 4, 6, '2014-09-25 23:06:32', '2014-09-26 00:38:21');
+INSERT INTO `snacks` VALUES(31, 'Sparkling Water', NULL, 1, 28, 6, 2, '2014-09-25 23:06:31', '2014-09-30 15:38:05');
+INSERT INTO `snacks` VALUES(30, '</div><p style="color:blue;">sanitize!</p>', NULL, 1, 21, 4, 7, '2014-09-24 16:49:26', '2014-09-26 00:23:49');
+INSERT INTO `snacks` VALUES(29, 'Izze', NULL, 1, 15, 7, 1, '2014-09-22 23:58:38', '2014-09-25 23:39:55');
+INSERT INTO `snacks` VALUES(27, '!ALSKDFJLAKSDJFSALDKF 0/0', NULL, 1, 19, 0, 8, '2014-09-22 23:48:33', '2014-09-26 00:24:02');
+INSERT INTO `snacks` VALUES(28, 'Chobani', NULL, 2, 15, 3, 0, '2014-09-22 23:57:55', '2014-09-26 07:56:07');
+INSERT INTO `snacks` VALUES(26, 'Odwalla', NULL, 1, 15, 11, 1, '2014-09-22 05:40:43', '2014-09-26 01:43:59');
+INSERT INTO `snacks` VALUES(25, 'Oatmeal', NULL, 1, 15, 7, 2, '2014-09-22 05:40:20', '2014-09-25 23:47:00');
+INSERT INTO `snacks` VALUES(33, 'Turkey', NULL, 1, 28, 4, 2, '2014-09-25 23:07:01', '2014-09-26 01:40:52');
+INSERT INTO `snacks` VALUES(34, '/><script>alert(''hello'')</script>', NULL, 1, 26, 1, 6, '2014-09-25 23:07:02', '2014-09-26 01:28:20');
+INSERT INTO `snacks` VALUES(35, 'M&M''s (Peanut)', NULL, 1, 28, 7, 1, '2014-09-25 23:08:37', '2014-09-26 01:44:38');
+INSERT INTO `snacks` VALUES(36, 'S°?????~???????¸?????????????L?¯???¨????¯???_???????????U¨???`?????????????????_R??¨?????_????????????_?M???????????????', NULL, 1, 27, 2, 7, '2014-09-25 23:09:28', '2014-09-26 01:28:55');
+INSERT INTO `snacks` VALUES(37, 'Robert''); DROP Table Students;', NULL, 1, 30, 0, 6, '2014-09-25 23:10:16', '2014-09-26 01:41:31');
+INSERT INTO `snacks` VALUES(38, 'Mike''s Hard Strawberry Lemonade', NULL, 1, 26, 1, 5, '2014-09-25 23:11:04', '2014-09-26 01:29:04');
+INSERT INTO `snacks` VALUES(39, 'alert(''1'')', NULL, 1, 30, 0, 5, '2014-09-25 23:11:17', '2014-09-26 01:28:24');
+INSERT INTO `snacks` VALUES(40, 'Dutch Double Licorice', NULL, 1, 31, 3, 2, '2014-09-25 23:11:28', '2014-09-25 23:49:54');
+INSERT INTO `snacks` VALUES(41, '<script>alert(1)</script>', NULL, 1, 30, 0, 6, '2014-09-25 23:11:36', '2014-09-26 01:28:19');
+INSERT INTO `snacks` VALUES(42, 'Bud Light Strawberrita', NULL, 1, 26, 1, 8, '2014-09-25 23:11:37', '2014-09-26 01:28:48');
+INSERT INTO `snacks` VALUES(43, 'Coconut Water', NULL, 1, 28, 4, 4, '2014-09-25 23:15:23', '2014-09-26 04:32:21');
+INSERT INTO `snacks` VALUES(44, 'iced tea', NULL, 1, 18, 2, 0, '2014-09-25 23:16:07', '2014-09-26 00:06:43');
+INSERT INTO `snacks` VALUES(45, 'Refreshing Diet Coke', NULL, 1, 34, 4, 5, '2014-09-25 23:17:56', '2014-09-26 01:29:35');
+INSERT INTO `snacks` VALUES(46, 'Sparking ICE and NOT Smirn Off Ice, although im okay with that 2', NULL, 1, 29, 1, 2, '2014-09-25 23:21:29', '2014-09-25 23:56:50');
+INSERT INTO `snacks` VALUES(47, 'Elderflower Water', NULL, 1, 31, 0, 3, '2014-09-25 23:21:59', '2014-09-26 01:29:05');
+INSERT INTO `snacks` VALUES(48, 'Apples', NULL, 1, 36, 5, 0, '2014-09-25 23:24:29', '2014-09-26 01:44:30');
+INSERT INTO `snacks` VALUES(49, 'test', NULL, 1, 30, 0, 5, '2014-09-25 23:24:50', '2014-09-26 01:28:09');
+INSERT INTO `snacks` VALUES(50, 'JK Swag Juicy Fruit', NULL, 1, 32, 2, 3, '2014-09-25 23:25:16', '2014-09-26 04:32:12');
+INSERT INTO `snacks` VALUES(51, '7 Grapes', NULL, 1, 35, 2, 2, '2014-09-25 23:25:17', '2014-09-26 07:41:33');
+INSERT INTO `snacks` VALUES(52, 'Lox (aka Smoked Salmon)', NULL, 1, 32, 1, 2, '2014-09-25 23:25:26', '2014-09-26 00:04:56');
+INSERT INTO `snacks` VALUES(53, 'Kombucha (don''t call it a comeback!)', NULL, 1, 32, 3, 3, '2014-09-25 23:25:48', '2014-09-26 00:04:32');
+INSERT INTO `snacks` VALUES(54, 'Tripel', NULL, 1, 32, 2, 1, '2014-09-25 23:26:44', '2014-10-05 04:03:19');
+INSERT INTO `snacks` VALUES(55, 'Some beer that is not an IPA (scrimshaw?)', NULL, 1, 38, 5, 1, '2014-09-25 23:29:14', '2014-09-27 02:51:48');
+INSERT INTO `snacks` VALUES(56, 'Lettuce, Tomatoes, other sandwich shit', NULL, 1, 37, 4, 2, '2014-09-25 23:30:27', '2014-09-30 15:40:50');
+INSERT INTO `snacks` VALUES(57, 'Tortilla Chips', NULL, 1, 42, 4, 1, '2014-09-25 23:37:45', '2014-09-26 01:40:38');
+INSERT INTO `snacks` VALUES(58, 'Bugles', NULL, 1, 31, 1, 2, '2014-09-25 23:39:16', '2014-09-26 01:26:55');
+INSERT INTO `snacks` VALUES(59, 'Popchips (holler)', NULL, 1, 24, 5, 1, '2014-09-25 23:39:19', '2014-09-26 01:41:01');
+INSERT INTO `snacks` VALUES(60, 'Krave beef jerkey', NULL, 1, 31, 4, 1, '2014-09-25 23:39:21', '2014-09-30 15:38:11');
+INSERT INTO `snacks` VALUES(61, 'Gummy bears', NULL, 1, 31, 3, 3, '2014-09-25 23:39:38', '2014-09-26 01:29:14');
+INSERT INTO `snacks` VALUES(62, 'lkhlh', NULL, 2, 40, 0, 1, '2014-09-25 23:40:18', '2014-09-27 01:45:48');
+INSERT INTO `snacks` VALUES(63, 'khhbk', NULL, 2, 40, 0, 1, '2014-09-25 23:40:21', '2014-09-27 01:45:50');
+INSERT INTO `snacks` VALUES(64, '.m;l', NULL, 2, 40, 0, 1, '2014-09-25 23:40:23', '2014-09-27 01:45:51');
+INSERT INTO `snacks` VALUES(65, 'Kettle brand salt and vinegar chips', NULL, 1, 31, 9, 0, '2014-09-25 23:41:40', '2014-09-26 01:44:03');
+INSERT INTO `snacks` VALUES(66, 'Some beer that IS an IPA', NULL, 1, 26, 3, 0, '2014-09-25 23:42:36', '2014-09-25 23:56:23');
+INSERT INTO `snacks` VALUES(67, 'San Pellegrino', NULL, 1, 43, 5, 0, '2014-09-25 23:43:17', '2014-09-26 07:41:23');
+INSERT INTO `snacks` VALUES(68, 'Hard Cider (any brand)', NULL, 1, 43, 3, 2, '2014-09-25 23:43:40', '2014-09-26 01:27:01');
+INSERT INTO `snacks` VALUES(69, 'Baby Carrots', NULL, 1, 36, 4, 2, '2014-09-25 23:47:17', '2014-09-30 15:38:15');
+INSERT INTO `snacks` VALUES(70, 'shots', NULL, 1, 26, 4, 1, '2014-09-25 23:49:17', '2014-09-26 00:38:05');
+INSERT INTO `snacks` VALUES(71, 'Roasted Almonds', NULL, 1, 31, 6, 0, '2014-09-25 23:52:46', '2014-09-26 01:40:34');
+INSERT INTO `snacks` VALUES(72, 'Jello', NULL, 1, 24, 0, 3, '2014-09-25 23:53:17', '2014-09-26 01:29:10');
+INSERT INTO `snacks` VALUES(73, 'Chocolate Pudding!!!', NULL, 1, 31, 1, 3, '2014-09-25 23:56:03', '2014-09-26 01:29:19');
+INSERT INTO `snacks` VALUES(74, 'Assorted crackers', NULL, 1, 31, 3, 0, '2014-09-25 23:56:23', '2014-09-26 01:41:15');
+INSERT INTO `snacks` VALUES(75, 'Stumptown Coldbrew', NULL, 1, 28, 2, 1, '2014-09-25 23:57:57', '2014-09-26 17:22:30');
+INSERT INTO `snacks` VALUES(76, 'Durian', NULL, 2, 31, 0, 0, '2014-09-26 00:01:30', '2014-09-26 00:01:30');
+INSERT INTO `snacks` VALUES(77, 'Dried fish', NULL, 2, 31, 0, 0, '2014-09-26 00:01:32', '2014-09-26 00:01:32');
+INSERT INTO `snacks` VALUES(78, 'Pickled Herring', NULL, 2, 31, 0, 0, '2014-09-26 00:01:36', '2014-09-26 00:01:36');
+INSERT INTO `snacks` VALUES(79, 'Natto', NULL, 2, 31, 0, 0, '2014-09-26 00:01:45', '2014-09-26 00:01:45');
+INSERT INTO `snacks` VALUES(80, 'Kimchi', NULL, 2, 31, 0, 0, '2014-09-26 00:01:48', '2014-09-26 00:01:48');
+INSERT INTO `snacks` VALUES(81, '10 print "Hello"      20 goto 10', NULL, 1, 39, 0, 1, '2014-09-26 00:50:20', '2014-09-26 01:41:38');
+INSERT INTO `snacks` VALUES(82, 'Granola Bars', NULL, 1, 31, 1, 1, '2014-09-26 17:23:02', '2014-09-30 15:40:57');
+INSERT INTO `snacks` VALUES(83, 'Raw Almonds!', NULL, 1, 50, 0, 0, '2014-09-30 15:39:55', '2014-09-30 15:39:55');
+INSERT INTO `snacks` VALUES(84, 'Dried Apricots', NULL, 1, 50, 0, 0, '2014-09-30 15:40:02', '2014-09-30 15:40:02');
+INSERT INTO `snacks` VALUES(85, 'Clif Bars', NULL, 1, 50, 0, 0, '2014-09-30 15:41:17', '2014-09-30 15:41:17');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `remember_token` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `users_email_unique` (`email`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=56 ;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` VALUES(27, 'lukas@doubledutch.me', '$2y$10$1zgAGQQPvZk2LwPkEEyHMOOMls5eANlBAuqP3k3UJJCIJfg/K/izq', '', '2014-09-25 23:05:50', '2014-09-25 23:09:24', 'suuw8CfqAsSU0mAqBZtzt6qQIURkDvdqo8BjH6NXrw4YiUDpb18Jhtz6YOXY');
+INSERT INTO `users` VALUES(26, 'rcoonan@doubledutch.me', '$2y$10$5t3gGaYIEm6oPO73q4r/5uZk1Q/s2xDua2j.NdEMpU6TXUnSAOFEW', '', '2014-09-25 23:05:43', '2014-09-26 21:04:11', '8riu7wXYu5sJDYWUThyjQtoXNSGaQCJZ4Qx6I24p3bMS6fkVdD1KJ8QvOmBJ');
+INSERT INTO `users` VALUES(25, 'lkj@doubledutch.me', '$2y$10$V97dEVLQ64sefR81/HgEVOCRVMS4xGqBy.zGEycVV3TFo2HTUoNwC', '', '2014-09-25 23:05:36', '2014-09-25 23:05:36', NULL);
+INSERT INTO `users` VALUES(24, 'anguyen@doubledutch.me', '$2y$10$BkH2zCJodLqt6k4sEHdQGuFJGoZivfuUEhHzUDShto3ar8HqDMxiS', '', '2014-09-25 23:05:14', '2014-09-25 23:36:10', 'NLaGYqzcVEXx6td1Ue3Rs1cAbvemj7CEIJVU8SjGbBw9fqF5ZilUSu1upgTv');
+INSERT INTO `users` VALUES(23, 'lkjsdlkjflskjf@doubledutch.me', '$2y$10$Vm3Vqj09JD6mfIe/H7eAK.Es/zSE3PjJS3SaxHOdZufXWyxQlHSiG', '', '2014-09-25 22:42:32', '2014-09-25 22:58:41', 'DawFFl0ILHoJsV3kuhZhT4H0rMMZ7hqoUEqSUDxuKg0AXZpaxpITuuXUWFTw');
+INSERT INTO `users` VALUES(22, 'Test55@doubledutch.me', '$2y$10$/h6b2KVk69FKuFZpPL5HM.LA5WWdVvd3Ht.6Do9lve7mdV8jj5/E2', '', '2014-09-24 06:47:46', '2014-09-24 06:47:46', NULL);
+INSERT INTO `users` VALUES(20, 'Test1@doubledutch.me', '$2y$10$f4xg2pWrQi7MU2MHMRUuRuOqvN9f.fnd6Sn1AuHcA3qXH3dtuJmoS', '', '2014-09-23 07:55:08', '2014-09-23 07:55:08', NULL);
+INSERT INTO `users` VALUES(19, 'john@doubledutch.me', '$2y$10$9VaVTP668fuwcB.nKpeNh.bfq4Bxw8JP5kSXzUPMr8zzbm/xXbdvS', '', '2014-09-22 23:48:22', '2014-09-22 23:48:22', NULL);
+INSERT INTO `users` VALUES(18, 'alison@doubledutch.me', '$2y$10$8xl3wd3Lmm4uEEZtjHe07.Zi6HskmNqe7Vp.A/YOn7PqPn3IXh6ZS', '', '2014-09-22 23:38:34', '2014-09-25 23:13:57', 'R5SPTKGHXGExlDwkUHWjZny9asuwQNZWSU37giGUdMoCEEYFIRyvYLMxH0uL');
+INSERT INTO `users` VALUES(17, 'lkjsdf@doubledutch.me', '$2y$10$V5eWgg/McumwCSThDv2yC.HGsvswBqaTMBPSMOJbvv61QSoJEIrNC', '', '2014-09-22 23:37:50', '2014-09-22 23:42:09', 'g5Sx3kRLzcoXsMe0lnI92C3CoYERT2I6ijW0DhOzU5pAavoOahpM3iBCbXgZ');
+INSERT INTO `users` VALUES(16, 'tyler@doubledutch.me', '$2y$10$.kU1HgXyesEj1B1RiqFn/eubwHcII787qabjlv9rNkF2SeGyG.bju', '', '2014-09-22 23:33:59', '2014-09-25 23:05:48', 'ntt4cRxxSneLf1IVkdv1rMhE3e7WpPCx1mTcJoibnVGzrzEr3GlgkIAQ38bG');
+INSERT INTO `users` VALUES(21, 'jordan@doubledutch.me', '$2y$10$r3yI6.rGM.75Ef6ppGGCD./tY1DcvTPQrSRTRbrWW/s87GZhj2kNu', '', '2014-09-24 06:40:39', '2014-10-05 03:16:22', '5JncJdbUucc8RlskNcm2fCTwWQeA3f679a91dPkLqsdraMd4RxAjaa2sM7ex');
+INSERT INTO `users` VALUES(28, 'josh@doubledutch.me', '$2y$10$mpGfCuaY92NCnveokW032uNhrfrMxTVvbBJP.Wz3K2myKregD9RV2', '', '2014-09-25 23:05:52', '2014-09-29 17:27:12', '5wLjFvM1oAmECtoIC5gPGsh3CmP7i7KaavWelLBEEVdXKcEEVo3D7lreQaUd');
+INSERT INTO `users` VALUES(29, 'shamik@doubledutch.me', '$2y$10$g8UxYTp7hM5/EA2aRSmD7uy4LxPIE5vcHnZ0Cn0/8VFnmXWBzWmo.', '', '2014-09-25 23:08:21', '2014-09-25 23:08:21', NULL);
+INSERT INTO `users` VALUES(30, 'nclark@doubledutch.me', '$2y$10$fY6pxX3JDIDqYz/khTn1M.X0FbFjLz2bJtpwmv4a4Lv5QaSfKogbO', '', '2014-09-25 23:09:12', '2014-09-25 23:09:12', NULL);
+INSERT INTO `users` VALUES(31, 'kasper@doubledutch.me', '$2y$10$DfVg5xSskS4/.l6XSj8KBuiPjmS4z5TlUlQm.ArlZGZ9HTVrV2yQS', '', '2014-09-25 23:11:08', '2014-09-26 17:21:46', 'yATlp5GtC88O2BSl4rWneh7N7ch8gfrZOGk2lgK6Tbt48fvhb5QfXt62Ukge');
+INSERT INTO `users` VALUES(32, 'milich@doubledutch.me', '$2y$10$8NTWBQBka3VgT2YvjrXRZuHkvBvTby6Lz6ETcazMDL4nnat/BHWVW', '', '2014-09-25 23:14:59', '2014-09-25 23:14:59', NULL);
+INSERT INTO `users` VALUES(33, 'tim@doubledutch.me', '$2y$10$ZwBA0tLrOAkpeRmbBTPOu.MPZ3FrOXt7mlD6snno.Jl/lkwrmnXSy', '', '2014-09-25 23:15:17', '2014-09-25 23:15:17', NULL);
+INSERT INTO `users` VALUES(34, 'jason@doubledutch.me', '$2y$10$cBRUF15DpMx2LIKwZITf0uRcmP1QPkbdrwK7UoL0wdq5vkpQEvKa6', '', '2014-09-25 23:16:24', '2014-09-25 23:16:24', NULL);
+INSERT INTO `users` VALUES(35, 'Randall@doubledutch.me', '$2y$10$nau0AAIdzetmkb3UCN8EI./1asX2NmOsId8i/Tr./IkwiusQMrMee', '', '2014-09-25 23:19:18', '2014-09-25 23:19:18', NULL);
+INSERT INTO `users` VALUES(36, 'angela@doubledutch.me', '$2y$10$06Nz/vOKDSNX.zTLvdeNPOkUeSAZcio357siQfKgorvfMWRHMKlnO', '', '2014-09-25 23:22:19', '2014-09-25 23:22:19', NULL);
+INSERT INTO `users` VALUES(37, 'Garrett@doubledutch.me', '$2y$10$CRh3KyIW83o1fTE0kuBYVeLe2q/ZPh5fIOIueN/Gw0l9ZSkt3CaS2', '', '2014-09-25 23:24:53', '2014-09-25 23:29:20', 'tMHwREivvOLEexZhmQ6XGqMEa8vnljyiTcimh8UzBBHlylJLWggiqJxq1Pdd');
+INSERT INTO `users` VALUES(38, 'lawrence@doubledutch.me', '$2y$10$5qv7VxD2tTp8krY7Oyf05OOXQkKXX2k2SYslttOgmIJ82oSPQioaK', '', '2014-09-25 23:28:34', '2014-09-25 23:28:34', NULL);
+INSERT INTO `users` VALUES(39, 'lucian@doubledutch.me', '$2y$10$HMbkJ00.SALQ/MavbaZ2Lej6fsuXn0MLqYZ3htWqDh/Kv/lqRNw8O', '', '2014-09-25 23:36:08', '2014-09-25 23:36:08', NULL);
+INSERT INTO `users` VALUES(40, 'saket@doubledutch.me', '$2y$10$bpcneGs9HihiKlj.1NBpjurOnqoUlchbZgU6C36SJBtm1Dgls2EnS', '', '2014-09-25 23:37:13', '2014-09-25 23:37:13', NULL);
+INSERT INTO `users` VALUES(41, 'vijai@doubledutch.me', '$2y$10$APhmVXsIAK6RJHuzzcq6aOE0ZcXV2Rd7GrflvnJfNXW.3WmuHpLLy', '', '2014-09-25 23:37:20', '2014-09-25 23:37:20', NULL);
+INSERT INTO `users` VALUES(42, 'adam@doubledutch.me', '$2y$10$DYUVAk78iSuvuXiCoE4k8OPTwKAMUBxOunlnwi0h6UpLhG6yNIBRe', '', '2014-09-25 23:37:23', '2014-09-25 23:37:23', NULL);
+INSERT INTO `users` VALUES(43, 'amanda@doubledutch.me', '$2y$10$9FTB4oKNK67XqzLc5TPUnO5Oe9IJrHaAReXexphagzO8jPp89EHCW', '', '2014-09-25 23:41:53', '2014-09-25 23:41:53', NULL);
+INSERT INTO `users` VALUES(44, 'john+1@doubledutch.me', '$2y$10$XFI4o8ZnwYmu9lHULjc5bengLjeJJtzoHjC/DU/2J/yJkqSYlLR/C', '', '2014-09-25 23:48:34', '2014-09-25 23:48:34', NULL);
+INSERT INTO `users` VALUES(45, 'cou@doubledutch.me', '$2y$10$x1aLUDiRkSyJGota5Y4cb.gngf0PWKs0GBwg45Pj3bbymnBrUs9v6', '', '2014-09-26 00:08:56', '2014-09-26 00:08:56', NULL);
+INSERT INTO `users` VALUES(46, 'henry@doubledutch.me', '$2y$10$mDiOUeJCvC3xbTRCIgz6N./ohnlVLe8eh.kLtlAQnetK4L2gUSB/2', '', '2014-09-26 01:43:44', '2014-09-26 01:43:44', NULL);
+INSERT INTO `users` VALUES(47, 'poiu@doubledutch.me', '$2y$10$O.CjpWd/F.houIW3IygS8OVurChCTYxyexsNSDEOSSRlJD1n46lEy', '', '2014-09-26 05:57:41', '2014-09-26 05:57:41', NULL);
+INSERT INTO `users` VALUES(48, '321@doubledutch.me', '$2y$10$tdwPjCmEk6hEHlBo6g48ieNBbbuGd3KIvSwswg4neb3/zJuCldCZm', '', '2014-09-26 06:15:34', '2014-09-26 06:15:34', NULL);
+INSERT INTO `users` VALUES(49, 'cou+1@doubledutch.me', '$2y$10$G6aDpSeneHOiTEsiD8BXC.LJg4ttGH7JZX8dKR/RaO2g0rTLQ8S5u', '', '2014-09-26 18:53:08', '2014-09-26 18:53:08', NULL);
+INSERT INTO `users` VALUES(50, 'julia@doubledutch.me', '$2y$10$nDID.J.VeB.OrzhW/07M.u4I2v0V1e1kvdGM18lJRc2E6J/z5x12a', '', '2014-09-30 15:37:42', '2014-09-30 15:37:42', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `votes`
+--
+
+CREATE TABLE `votes` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `snack_id` int(10) unsigned NOT NULL,
+  `user_id` int(10) unsigned NOT NULL,
+  `value` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `votes_snack_id_user_id_unique` (`snack_id`,`user_id`),
+  KEY `votes_user_id_foreign` (`user_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=322 ;
+
+--
+-- Dumping data for table `votes`
+--
+
+INSERT INTO `votes` VALUES(1, 2, 1, -1, '2014-09-04 06:25:08', '2014-09-04 07:40:06');
+INSERT INTO `votes` VALUES(2, 1, 1, -1, '2014-09-04 06:30:36', '2014-09-04 07:40:03');
+INSERT INTO `votes` VALUES(3, 3, 1, -1, '2014-09-04 06:51:49', '2014-09-05 08:34:22');
+INSERT INTO `votes` VALUES(4, 5, 1, -1, '2014-09-04 06:52:26', '2014-09-05 08:17:45');
+INSERT INTO `votes` VALUES(5, 4, 1, 1, '2014-09-04 07:00:41', '2014-09-04 07:34:38');
+INSERT INTO `votes` VALUES(6, 6, 1, 1, '2014-09-04 07:00:48', '2014-09-05 08:17:42');
+INSERT INTO `votes` VALUES(7, 14, 1, 1, '2014-09-05 08:05:23', '2014-09-05 08:32:56');
+INSERT INTO `votes` VALUES(8, 16, 1, -1, '2014-09-05 08:05:30', '2014-09-05 08:05:30');
+INSERT INTO `votes` VALUES(9, 18, 1, -1, '2014-09-05 08:10:04', '2014-09-05 08:13:47');
+INSERT INTO `votes` VALUES(10, 12, 1, 1, '2014-09-05 08:10:13', '2014-09-05 08:10:13');
+INSERT INTO `votes` VALUES(11, 13, 1, -1, '2014-09-05 08:17:40', '2014-09-05 08:17:40');
+INSERT INTO `votes` VALUES(12, 15, 1, -1, '2014-09-05 08:32:53', '2014-09-05 08:32:53');
+INSERT INTO `votes` VALUES(13, 12, 7, 1, '2014-09-18 08:18:33', '2014-09-18 08:20:03');
+INSERT INTO `votes` VALUES(14, 14, 7, 1, '2014-09-18 08:18:40', '2014-09-18 08:20:01');
+INSERT INTO `votes` VALUES(15, 16, 7, 1, '2014-09-18 08:18:58', '2014-09-18 08:19:23');
+INSERT INTO `votes` VALUES(16, 15, 7, -1, '2014-09-18 08:19:26', '2014-09-18 08:19:26');
+INSERT INTO `votes` VALUES(17, 3, 7, -1, '2014-09-18 08:19:32', '2014-09-18 08:19:56');
+INSERT INTO `votes` VALUES(18, 17, 7, -1, '2014-09-18 08:19:34', '2014-09-18 08:19:42');
+INSERT INTO `votes` VALUES(19, 16, 9, 1, '2014-09-22 04:50:52', '2014-09-22 04:50:52');
+INSERT INTO `votes` VALUES(20, 3, 9, -1, '2014-09-22 04:51:07', '2014-09-22 04:51:07');
+INSERT INTO `votes` VALUES(21, 14, 9, 1, '2014-09-22 04:53:50', '2014-09-22 04:53:50');
+INSERT INTO `votes` VALUES(22, 6, 9, -1, '2014-09-22 04:56:41', '2014-09-22 04:56:41');
+INSERT INTO `votes` VALUES(23, 13, 9, 1, '2014-09-22 04:56:42', '2014-09-22 04:56:42');
+INSERT INTO `votes` VALUES(24, 14, 11, 1, '2014-09-22 05:07:28', '2014-09-22 05:07:28');
+INSERT INTO `votes` VALUES(25, 3, 11, -1, '2014-09-22 05:07:30', '2014-09-22 05:07:30');
+INSERT INTO `votes` VALUES(26, 23, 12, 1, '2014-09-22 05:12:33', '2014-09-22 05:12:33');
+INSERT INTO `votes` VALUES(27, 12, 11, 1, '2014-09-22 05:17:02', '2014-09-22 05:17:02');
+INSERT INTO `votes` VALUES(28, 16, 11, 1, '2014-09-22 05:17:13', '2014-09-22 05:17:13');
+INSERT INTO `votes` VALUES(29, 16, 14, -1, '2014-09-22 05:32:00', '2014-09-22 05:32:09');
+INSERT INTO `votes` VALUES(30, 17, 14, 1, '2014-09-22 05:32:20', '2014-09-22 05:32:20');
+INSERT INTO `votes` VALUES(31, 23, 14, -1, '2014-09-22 05:32:23', '2014-09-22 05:32:30');
+INSERT INTO `votes` VALUES(32, 12, 14, 1, '2014-09-22 05:32:26', '2014-09-22 05:32:34');
+INSERT INTO `votes` VALUES(33, 14, 14, -1, '2014-09-22 05:32:32', '2014-09-22 05:32:32');
+INSERT INTO `votes` VALUES(34, 15, 14, -1, '2014-09-22 05:32:38', '2014-09-22 05:32:38');
+INSERT INTO `votes` VALUES(35, 25, 15, 1, '2014-09-22 05:40:22', '2014-09-22 05:40:22');
+INSERT INTO `votes` VALUES(36, 26, 15, 1, '2014-09-22 05:40:45', '2014-09-22 05:40:45');
+INSERT INTO `votes` VALUES(37, 25, 16, 1, '2014-09-22 23:34:50', '2014-09-22 23:34:50');
+INSERT INTO `votes` VALUES(38, 26, 16, 1, '2014-09-22 23:35:05', '2014-09-22 23:35:05');
+INSERT INTO `votes` VALUES(39, 27, 19, -1, '2014-09-22 23:48:36', '2014-09-22 23:48:36');
+INSERT INTO `votes` VALUES(40, 27, 15, -1, '2014-09-22 23:57:35', '2014-09-22 23:57:35');
+INSERT INTO `votes` VALUES(41, 28, 15, 1, '2014-09-22 23:57:56', '2014-09-22 23:57:56');
+INSERT INTO `votes` VALUES(42, 29, 15, 1, '2014-09-22 23:58:40', '2014-09-22 23:58:40');
+INSERT INTO `votes` VALUES(43, 27, 22, -1, '2014-09-24 06:48:57', '2014-09-24 06:48:57');
+INSERT INTO `votes` VALUES(44, 29, 22, 1, '2014-09-24 06:48:58', '2014-09-24 06:48:58');
+INSERT INTO `votes` VALUES(45, 26, 22, 1, '2014-09-24 06:49:00', '2014-09-24 06:49:00');
+INSERT INTO `votes` VALUES(46, 25, 22, 1, '2014-09-24 06:49:01', '2014-09-24 06:49:01');
+INSERT INTO `votes` VALUES(47, 30, 21, -1, '2014-09-24 16:51:23', '2014-09-24 16:51:23');
+INSERT INTO `votes` VALUES(48, 27, 21, -1, '2014-09-24 16:51:25', '2014-09-24 16:51:25');
+INSERT INTO `votes` VALUES(49, 29, 21, 1, '2014-09-24 16:51:31', '2014-09-24 16:51:31');
+INSERT INTO `votes` VALUES(50, 26, 21, 1, '2014-09-24 16:51:32', '2014-09-24 16:51:32');
+INSERT INTO `votes` VALUES(51, 25, 21, 1, '2014-09-24 16:51:33', '2014-09-24 16:51:33');
+INSERT INTO `votes` VALUES(52, 29, 24, 1, '2014-09-25 23:05:24', '2014-09-25 23:05:24');
+INSERT INTO `votes` VALUES(53, 30, 16, -1, '2014-09-25 23:05:55', '2014-09-25 23:25:01');
+INSERT INTO `votes` VALUES(54, 30, 26, -1, '2014-09-25 23:05:57', '2014-09-25 23:10:28');
+INSERT INTO `votes` VALUES(55, 29, 28, 1, '2014-09-25 23:05:58', '2014-09-25 23:05:58');
+INSERT INTO `votes` VALUES(56, 26, 28, 1, '2014-09-25 23:06:06', '2014-09-25 23:06:06');
+INSERT INTO `votes` VALUES(57, 25, 28, -1, '2014-09-25 23:06:07', '2014-09-25 23:06:07');
+INSERT INTO `votes` VALUES(58, 30, 28, -1, '2014-09-25 23:06:10', '2014-09-25 23:06:10');
+INSERT INTO `votes` VALUES(59, 27, 28, -1, '2014-09-25 23:06:17', '2014-09-25 23:06:17');
+INSERT INTO `votes` VALUES(60, 31, 28, 1, '2014-09-25 23:06:46', '2014-09-25 23:06:46');
+INSERT INTO `votes` VALUES(61, 30, 27, 1, '2014-09-25 23:06:53', '2014-09-25 23:06:53');
+INSERT INTO `votes` VALUES(62, 33, 28, 1, '2014-09-25 23:07:03', '2014-09-25 23:07:03');
+INSERT INTO `votes` VALUES(63, 35, 28, 1, '2014-09-25 23:08:40', '2014-09-25 23:08:40');
+INSERT INTO `votes` VALUES(64, 32, 26, 1, '2014-09-25 23:09:59', '2014-09-25 23:09:59');
+INSERT INTO `votes` VALUES(65, 25, 26, 1, '2014-09-25 23:10:11', '2014-09-25 23:10:11');
+INSERT INTO `votes` VALUES(66, 32, 27, 1, '2014-09-25 23:10:19', '2014-09-25 23:10:19');
+INSERT INTO `votes` VALUES(67, 27, 26, -1, '2014-09-25 23:10:23', '2014-09-25 23:10:23');
+INSERT INTO `votes` VALUES(68, 36, 26, -1, '2014-09-25 23:10:24', '2014-09-25 23:10:24');
+INSERT INTO `votes` VALUES(69, 34, 26, -1, '2014-09-25 23:10:25', '2014-09-25 23:10:25');
+INSERT INTO `votes` VALUES(70, 31, 31, 1, '2014-09-25 23:11:32', '2014-09-25 23:11:32');
+INSERT INTO `votes` VALUES(71, 38, 26, 1, '2014-09-25 23:11:40', '2014-09-25 23:11:40');
+INSERT INTO `votes` VALUES(72, 42, 26, 1, '2014-09-25 23:11:45', '2014-09-25 23:11:45');
+INSERT INTO `votes` VALUES(73, 40, 31, 1, '2014-09-25 23:12:05', '2014-09-25 23:12:05');
+INSERT INTO `votes` VALUES(74, 32, 31, -1, '2014-09-25 23:13:02', '2014-09-25 23:13:02');
+INSERT INTO `votes` VALUES(75, 33, 31, -1, '2014-09-25 23:13:18', '2014-09-25 23:13:18');
+INSERT INTO `votes` VALUES(76, 31, 18, 1, '2014-09-25 23:14:06', '2014-09-25 23:14:06');
+INSERT INTO `votes` VALUES(77, 40, 28, -1, '2014-09-25 23:14:42', '2014-09-25 23:14:42');
+INSERT INTO `votes` VALUES(78, 38, 28, -1, '2014-09-25 23:14:46', '2014-09-25 23:14:46');
+INSERT INTO `votes` VALUES(79, 42, 28, -1, '2014-09-25 23:14:48', '2014-09-25 23:14:48');
+INSERT INTO `votes` VALUES(80, 32, 28, -1, '2014-09-25 23:14:50', '2014-09-25 23:14:50');
+INSERT INTO `votes` VALUES(81, 43, 28, 1, '2014-09-25 23:15:27', '2014-09-25 23:15:27');
+INSERT INTO `votes` VALUES(82, 35, 33, 1, '2014-09-25 23:15:35', '2014-09-25 23:15:35');
+INSERT INTO `votes` VALUES(83, 37, 31, -1, '2014-09-25 23:15:40', '2014-09-25 23:15:40');
+INSERT INTO `votes` VALUES(84, 30, 18, 1, '2014-09-25 23:15:41', '2014-09-25 23:15:41');
+INSERT INTO `votes` VALUES(85, 36, 27, 1, '2014-09-25 23:16:32', '2014-09-25 23:16:32');
+INSERT INTO `votes` VALUES(86, 30, 34, 1, '2014-09-25 23:16:51', '2014-09-25 23:16:51');
+INSERT INTO `votes` VALUES(87, 41, 34, -1, '2014-09-25 23:17:03', '2014-09-25 23:17:03');
+INSERT INTO `votes` VALUES(88, 36, 34, -1, '2014-09-25 23:17:09', '2014-09-25 23:17:09');
+INSERT INTO `votes` VALUES(89, 45, 34, 1, '2014-09-25 23:18:05', '2014-09-25 23:18:05');
+INSERT INTO `votes` VALUES(90, 25, 35, -1, '2014-09-25 23:19:31', '2014-09-25 23:19:31');
+INSERT INTO `votes` VALUES(91, 26, 35, -1, '2014-09-25 23:20:23', '2014-09-25 23:20:23');
+INSERT INTO `votes` VALUES(92, 45, 35, -1, '2014-09-25 23:20:28', '2014-09-25 23:20:28');
+INSERT INTO `votes` VALUES(93, 30, 35, -1, '2014-09-25 23:20:32', '2014-09-25 23:20:32');
+INSERT INTO `votes` VALUES(94, 43, 35, 1, '2014-09-25 23:20:41', '2014-09-25 23:20:41');
+INSERT INTO `votes` VALUES(95, 35, 31, 1, '2014-09-25 23:21:27', '2014-09-25 23:21:27');
+INSERT INTO `votes` VALUES(96, 43, 31, -1, '2014-09-25 23:21:28', '2014-09-25 23:21:28');
+INSERT INTO `votes` VALUES(97, 38, 31, -1, '2014-09-25 23:21:32', '2014-09-25 23:21:32');
+INSERT INTO `votes` VALUES(98, 42, 31, -1, '2014-09-25 23:21:34', '2014-09-25 23:21:34');
+INSERT INTO `votes` VALUES(99, 45, 31, 1, '2014-09-25 23:21:37', '2014-09-25 23:21:37');
+INSERT INTO `votes` VALUES(100, 46, 29, 1, '2014-09-25 23:21:41', '2014-09-25 23:21:41');
+INSERT INTO `votes` VALUES(101, 32, 29, 1, '2014-09-25 23:21:43', '2014-09-25 23:21:43');
+INSERT INTO `votes` VALUES(102, 37, 26, -1, '2014-09-25 23:21:55', '2014-09-25 23:21:55');
+INSERT INTO `votes` VALUES(103, 39, 26, -1, '2014-09-25 23:22:11', '2014-09-25 23:22:11');
+INSERT INTO `votes` VALUES(104, 31, 36, 1, '2014-09-25 23:22:36', '2014-09-25 23:22:36');
+INSERT INTO `votes` VALUES(105, 29, 36, 1, '2014-09-25 23:22:40', '2014-09-25 23:22:40');
+INSERT INTO `votes` VALUES(106, 32, 35, 1, '2014-09-25 23:23:36', '2014-09-25 23:23:36');
+INSERT INTO `votes` VALUES(107, 35, 35, 1, '2014-09-25 23:24:22', '2014-09-25 23:24:22');
+INSERT INTO `votes` VALUES(108, 33, 35, 1, '2014-09-25 23:24:25', '2014-09-25 23:24:25');
+INSERT INTO `votes` VALUES(109, 48, 36, 1, '2014-09-25 23:24:35', '2014-09-25 23:24:35');
+INSERT INTO `votes` VALUES(110, 36, 32, 1, '2014-09-25 23:24:43', '2014-09-25 23:24:43');
+INSERT INTO `votes` VALUES(111, 34, 32, 1, '2014-09-25 23:24:46', '2014-09-25 23:24:46');
+INSERT INTO `votes` VALUES(112, 30, 32, 1, '2014-09-25 23:24:47', '2014-09-25 23:24:47');
+INSERT INTO `votes` VALUES(113, 42, 36, -1, '2014-09-25 23:24:48', '2014-09-25 23:24:48');
+INSERT INTO `votes` VALUES(114, 40, 35, 1, '2014-09-25 23:24:50', '2014-09-25 23:24:50');
+INSERT INTO `votes` VALUES(115, 46, 16, -1, '2014-09-25 23:24:56', '2014-09-25 23:24:56');
+INSERT INTO `votes` VALUES(116, 36, 16, -1, '2014-09-25 23:24:58', '2014-09-25 23:24:58');
+INSERT INTO `votes` VALUES(117, 34, 16, -1, '2014-09-25 23:25:00', '2014-09-25 23:25:00');
+INSERT INTO `votes` VALUES(118, 32, 37, -1, '2014-09-25 23:25:08', '2014-09-25 23:25:08');
+INSERT INTO `votes` VALUES(119, 37, 16, -1, '2014-09-25 23:25:09', '2014-09-25 23:25:09');
+INSERT INTO `votes` VALUES(120, 27, 16, -1, '2014-09-25 23:25:09', '2014-09-25 23:25:09');
+INSERT INTO `votes` VALUES(121, 39, 16, -1, '2014-09-25 23:25:11', '2014-09-25 23:25:11');
+INSERT INTO `votes` VALUES(122, 38, 16, -1, '2014-09-25 23:25:13', '2014-09-25 23:25:13');
+INSERT INTO `votes` VALUES(123, 41, 16, -1, '2014-09-25 23:25:15', '2014-09-25 23:25:15');
+INSERT INTO `votes` VALUES(124, 33, 37, 1, '2014-09-25 23:25:16', '2014-09-25 23:25:16');
+INSERT INTO `votes` VALUES(125, 45, 37, 1, '2014-09-25 23:25:21', '2014-09-25 23:25:21');
+INSERT INTO `votes` VALUES(126, 51, 35, 1, '2014-09-25 23:25:21', '2014-09-25 23:25:21');
+INSERT INTO `votes` VALUES(127, 29, 30, 1, '2014-09-25 23:25:37', '2014-09-25 23:25:37');
+INSERT INTO `votes` VALUES(128, 52, 32, 1, '2014-09-25 23:26:10', '2014-09-25 23:26:10');
+INSERT INTO `votes` VALUES(129, 53, 32, 1, '2014-09-25 23:26:12', '2014-09-25 23:26:12');
+INSERT INTO `votes` VALUES(130, 55, 38, 1, '2014-09-25 23:29:22', '2014-09-25 23:29:22');
+INSERT INTO `votes` VALUES(131, 33, 27, 1, '2014-09-25 23:29:39', '2014-09-25 23:29:39');
+INSERT INTO `votes` VALUES(132, 35, 37, 1, '2014-09-25 23:30:03', '2014-09-25 23:30:03');
+INSERT INTO `votes` VALUES(133, 56, 37, 1, '2014-09-25 23:30:43', '2014-09-25 23:30:43');
+INSERT INTO `votes` VALUES(134, 55, 26, 1, '2014-09-25 23:36:56', '2014-09-25 23:36:56');
+INSERT INTO `votes` VALUES(135, 53, 26, 1, '2014-09-25 23:37:03', '2014-09-25 23:37:03');
+INSERT INTO `votes` VALUES(136, 29, 40, -1, '2014-09-25 23:37:16', '2014-09-25 23:39:55');
+INSERT INTO `votes` VALUES(137, 35, 40, 1, '2014-09-25 23:37:19', '2014-09-25 23:37:19');
+INSERT INTO `votes` VALUES(138, 26, 40, 1, '2014-09-25 23:37:20', '2014-09-25 23:37:20');
+INSERT INTO `votes` VALUES(139, 31, 40, 1, '2014-09-25 23:37:21', '2014-09-25 23:37:21');
+INSERT INTO `votes` VALUES(140, 43, 41, 1, '2014-09-25 23:37:52', '2014-09-25 23:37:52');
+INSERT INTO `votes` VALUES(141, 57, 42, 1, '2014-09-25 23:37:55', '2014-09-25 23:37:55');
+INSERT INTO `votes` VALUES(142, 26, 42, 1, '2014-09-25 23:38:11', '2014-09-25 23:38:11');
+INSERT INTO `votes` VALUES(143, 25, 42, 1, '2014-09-25 23:38:17', '2014-09-25 23:38:17');
+INSERT INTO `votes` VALUES(144, 51, 42, 1, '2014-09-25 23:38:26', '2014-09-25 23:38:26');
+INSERT INTO `votes` VALUES(145, 57, 31, 1, '2014-09-25 23:39:07', '2014-09-25 23:39:07');
+INSERT INTO `votes` VALUES(146, 34, 40, -1, '2014-09-25 23:40:00', '2014-09-25 23:40:00');
+INSERT INTO `votes` VALUES(147, 42, 40, -1, '2014-09-25 23:40:02', '2014-09-25 23:40:02');
+INSERT INTO `votes` VALUES(148, 38, 40, -1, '2014-09-25 23:40:03', '2014-09-25 23:40:03');
+INSERT INTO `votes` VALUES(149, 36, 40, -1, '2014-09-25 23:40:04', '2014-09-25 23:40:04');
+INSERT INTO `votes` VALUES(150, 30, 40, -1, '2014-09-25 23:40:06', '2014-09-25 23:40:06');
+INSERT INTO `votes` VALUES(151, 28, 40, 1, '2014-09-25 23:40:12', '2014-09-25 23:40:13');
+INSERT INTO `votes` VALUES(152, 26, 43, 1, '2014-09-25 23:41:59', '2014-09-25 23:41:59');
+INSERT INTO `votes` VALUES(153, 45, 27, -1, '2014-09-25 23:42:01', '2014-09-25 23:42:01');
+INSERT INTO `votes` VALUES(154, 55, 43, 1, '2014-09-25 23:42:06', '2014-09-25 23:42:06');
+INSERT INTO `votes` VALUES(155, 43, 27, -1, '2014-09-25 23:42:07', '2014-09-25 23:42:07');
+INSERT INTO `votes` VALUES(156, 31, 27, -1, '2014-09-25 23:42:10', '2014-09-25 23:42:10');
+INSERT INTO `votes` VALUES(157, 32, 43, -1, '2014-09-25 23:42:21', '2014-09-25 23:42:21');
+INSERT INTO `votes` VALUES(158, 61, 43, 1, '2014-09-25 23:42:34', '2014-09-25 23:42:34');
+INSERT INTO `votes` VALUES(159, 42, 27, -1, '2014-09-25 23:42:41', '2014-09-25 23:42:41');
+INSERT INTO `votes` VALUES(160, 65, 43, 1, '2014-09-25 23:42:41', '2014-09-25 23:42:41');
+INSERT INTO `votes` VALUES(161, 65, 26, 1, '2014-09-25 23:42:49', '2014-09-25 23:42:49');
+INSERT INTO `votes` VALUES(162, 66, 26, 1, '2014-09-25 23:42:58', '2014-09-25 23:42:58');
+INSERT INTO `votes` VALUES(163, 49, 26, -1, '2014-09-25 23:43:02', '2014-09-25 23:43:02');
+INSERT INTO `votes` VALUES(164, 67, 43, 1, '2014-09-25 23:43:22', '2014-09-25 23:43:22');
+INSERT INTO `votes` VALUES(165, 49, 43, -1, '2014-09-25 23:43:28', '2014-09-25 23:43:28');
+INSERT INTO `votes` VALUES(166, 68, 43, 1, '2014-09-25 23:43:48', '2014-09-25 23:43:48');
+INSERT INTO `votes` VALUES(167, 53, 31, 1, '2014-09-25 23:43:59', '2014-09-25 23:43:59');
+INSERT INTO `votes` VALUES(168, 65, 31, 1, '2014-09-25 23:44:02', '2014-09-25 23:44:02');
+INSERT INTO `votes` VALUES(169, 61, 31, 1, '2014-09-25 23:44:18', '2014-09-25 23:44:18');
+INSERT INTO `votes` VALUES(170, 58, 31, 1, '2014-09-25 23:44:25', '2014-09-25 23:44:25');
+INSERT INTO `votes` VALUES(171, 60, 31, 1, '2014-09-25 23:44:29', '2014-09-25 23:44:29');
+INSERT INTO `votes` VALUES(172, 65, 32, 1, '2014-09-25 23:46:10', '2014-09-25 23:46:10');
+INSERT INTO `votes` VALUES(173, 55, 32, 1, '2014-09-25 23:46:19', '2014-09-25 23:46:19');
+INSERT INTO `votes` VALUES(174, 43, 32, 1, '2014-09-25 23:46:35', '2014-09-25 23:46:35');
+INSERT INTO `votes` VALUES(175, 65, 36, 1, '2014-09-25 23:47:00', '2014-09-25 23:47:00');
+INSERT INTO `votes` VALUES(176, 25, 36, 1, '2014-09-25 23:47:00', '2014-09-25 23:47:00');
+INSERT INTO `votes` VALUES(177, 59, 32, 1, '2014-09-25 23:47:36', '2014-09-25 23:47:36');
+INSERT INTO `votes` VALUES(178, 59, 36, 1, '2014-09-25 23:47:37', '2014-09-25 23:47:37');
+INSERT INTO `votes` VALUES(179, 40, 36, 1, '2014-09-25 23:47:42', '2014-09-25 23:47:42');
+INSERT INTO `votes` VALUES(180, 54, 32, 1, '2014-09-25 23:47:46', '2014-09-25 23:47:46');
+INSERT INTO `votes` VALUES(181, 69, 36, 1, '2014-09-25 23:47:58', '2014-09-25 23:47:58');
+INSERT INTO `votes` VALUES(182, 26, 41, 1, '2014-09-25 23:48:02', '2014-09-25 23:48:02');
+INSERT INTO `votes` VALUES(183, 68, 26, 1, '2014-09-25 23:48:17', '2014-09-25 23:48:17');
+INSERT INTO `votes` VALUES(184, 70, 26, 1, '2014-09-25 23:49:21', '2014-09-25 23:49:21');
+INSERT INTO `votes` VALUES(185, 65, 37, 1, '2014-09-25 23:49:43', '2014-09-25 23:49:43');
+INSERT INTO `votes` VALUES(186, 53, 37, -1, '2014-09-25 23:49:49', '2014-09-25 23:49:49');
+INSERT INTO `votes` VALUES(187, 40, 37, -1, '2014-09-25 23:49:54', '2014-09-25 23:49:54');
+INSERT INTO `votes` VALUES(188, 61, 37, -1, '2014-09-25 23:50:02', '2014-09-25 23:50:02');
+INSERT INTO `votes` VALUES(189, 68, 37, -1, '2014-09-25 23:50:04', '2014-09-25 23:50:04');
+INSERT INTO `votes` VALUES(190, 26, 44, 1, '2014-09-25 23:51:49', '2014-09-25 23:52:18');
+INSERT INTO `votes` VALUES(191, 66, 31, 1, '2014-09-25 23:51:57', '2014-09-25 23:51:57');
+INSERT INTO `votes` VALUES(192, 67, 31, 1, '2014-09-25 23:52:00', '2014-09-25 23:52:00');
+INSERT INTO `votes` VALUES(193, 69, 31, -1, '2014-09-25 23:52:03', '2014-09-25 23:52:03');
+INSERT INTO `votes` VALUES(194, 50, 31, 1, '2014-09-25 23:52:13', '2014-09-25 23:52:13');
+INSERT INTO `votes` VALUES(195, 71, 31, 1, '2014-09-25 23:52:54', '2014-09-25 23:52:54');
+INSERT INTO `votes` VALUES(196, 59, 24, 1, '2014-09-25 23:53:22', '2014-09-25 23:53:22');
+INSERT INTO `votes` VALUES(197, 71, 16, 1, '2014-09-25 23:54:50', '2014-09-25 23:54:50');
+INSERT INTO `votes` VALUES(198, 55, 28, -1, '2014-09-25 23:55:36', '2014-09-25 23:57:29');
+INSERT INTO `votes` VALUES(199, 59, 28, -1, '2014-09-25 23:55:42', '2014-09-25 23:55:42');
+INSERT INTO `votes` VALUES(200, 71, 28, 1, '2014-09-25 23:55:46', '2014-09-25 23:55:46');
+INSERT INTO `votes` VALUES(201, 67, 28, 1, '2014-09-25 23:55:52', '2014-09-25 23:55:52');
+INSERT INTO `votes` VALUES(202, 57, 28, 1, '2014-09-25 23:55:56', '2014-09-25 23:56:35');
+INSERT INTO `votes` VALUES(203, 51, 28, -1, '2014-09-25 23:56:01', '2014-09-25 23:56:01');
+INSERT INTO `votes` VALUES(204, 53, 28, -1, '2014-09-25 23:56:03', '2014-09-25 23:56:03');
+INSERT INTO `votes` VALUES(205, 60, 28, -1, '2014-09-25 23:56:06', '2014-09-25 23:56:06');
+INSERT INTO `votes` VALUES(206, 61, 28, -1, '2014-09-25 23:56:08', '2014-09-25 23:56:08');
+INSERT INTO `votes` VALUES(207, 70, 28, 1, '2014-09-25 23:56:11', '2014-09-25 23:56:11');
+INSERT INTO `votes` VALUES(208, 50, 28, 1, '2014-09-25 23:56:16', '2014-09-25 23:56:16');
+INSERT INTO `votes` VALUES(209, 48, 28, 1, '2014-09-25 23:56:18', '2014-09-25 23:56:18');
+INSERT INTO `votes` VALUES(210, 66, 28, 1, '2014-09-25 23:56:23', '2014-09-25 23:56:23');
+INSERT INTO `votes` VALUES(211, 52, 28, -1, '2014-09-25 23:56:27', '2014-09-25 23:56:27');
+INSERT INTO `votes` VALUES(212, 54, 28, 1, '2014-09-25 23:56:30', '2014-09-25 23:56:30');
+INSERT INTO `votes` VALUES(213, 68, 28, -1, '2014-09-25 23:56:32', '2014-09-25 23:56:32');
+INSERT INTO `votes` VALUES(214, 58, 28, -1, '2014-09-25 23:56:37', '2014-09-25 23:56:37');
+INSERT INTO `votes` VALUES(215, 44, 28, 1, '2014-09-25 23:56:43', '2014-09-25 23:56:43');
+INSERT INTO `votes` VALUES(216, 74, 31, 1, '2014-09-25 23:56:48', '2014-09-25 23:56:48');
+INSERT INTO `votes` VALUES(217, 46, 28, -1, '2014-09-25 23:56:50', '2014-09-25 23:56:50');
+INSERT INTO `votes` VALUES(218, 47, 28, -1, '2014-09-25 23:56:53', '2014-09-25 23:56:53');
+INSERT INTO `votes` VALUES(219, 72, 28, -1, '2014-09-25 23:56:55', '2014-09-25 23:56:55');
+INSERT INTO `votes` VALUES(220, 65, 28, 1, '2014-09-25 23:57:19', '2014-09-25 23:57:19');
+INSERT INTO `votes` VALUES(221, 75, 28, 1, '2014-09-25 23:58:08', '2014-09-25 23:58:08');
+INSERT INTO `votes` VALUES(222, 73, 28, -1, '2014-09-25 23:58:12', '2014-09-25 23:58:12');
+INSERT INTO `votes` VALUES(223, 69, 28, -1, '2014-09-25 23:58:19', '2014-09-25 23:58:19');
+INSERT INTO `votes` VALUES(224, 56, 28, 1, '2014-09-25 23:58:21', '2014-09-25 23:58:21');
+INSERT INTO `votes` VALUES(225, 74, 28, 1, '2014-09-25 23:58:24', '2014-09-25 23:58:24');
+INSERT INTO `votes` VALUES(226, 45, 28, 1, '2014-09-25 23:58:27', '2014-09-25 23:58:27');
+INSERT INTO `votes` VALUES(227, 37, 28, -1, '2014-09-26 00:00:06', '2014-09-26 00:00:06');
+INSERT INTO `votes` VALUES(228, 36, 28, -1, '2014-09-26 00:00:06', '2014-09-26 00:00:06');
+INSERT INTO `votes` VALUES(229, 34, 28, -1, '2014-09-26 00:00:07', '2014-09-26 00:00:07');
+INSERT INTO `votes` VALUES(230, 39, 28, -1, '2014-09-26 00:00:07', '2014-09-26 00:00:07');
+INSERT INTO `votes` VALUES(231, 49, 28, -1, '2014-09-26 00:00:08', '2014-09-26 00:00:08');
+INSERT INTO `votes` VALUES(232, 41, 28, -1, '2014-09-26 00:00:09', '2014-09-26 00:00:09');
+INSERT INTO `votes` VALUES(233, 53, 34, -1, '2014-09-26 00:04:32', '2014-09-26 00:04:32');
+INSERT INTO `votes` VALUES(234, 42, 34, -1, '2014-09-26 00:04:44', '2014-09-26 00:04:44');
+INSERT INTO `votes` VALUES(235, 52, 34, -1, '2014-09-26 00:04:56', '2014-09-26 00:04:56');
+INSERT INTO `votes` VALUES(236, 71, 26, 1, '2014-09-26 00:05:57', '2014-09-26 00:05:57');
+INSERT INTO `votes` VALUES(237, 50, 26, -1, '2014-09-26 00:06:26', '2014-09-26 00:06:26');
+INSERT INTO `votes` VALUES(238, 44, 26, 1, '2014-09-26 00:06:43', '2014-09-26 00:06:43');
+INSERT INTO `votes` VALUES(239, 41, 26, -1, '2014-09-26 00:07:08', '2014-09-26 00:07:08');
+INSERT INTO `votes` VALUES(240, 56, 16, 1, '2014-09-26 00:13:10', '2014-09-26 00:13:10');
+INSERT INTO `votes` VALUES(241, 50, 16, -1, '2014-09-26 00:13:13', '2014-09-26 00:13:13');
+INSERT INTO `votes` VALUES(242, 75, 16, -1, '2014-09-26 00:13:14', '2014-09-26 00:13:14');
+INSERT INTO `votes` VALUES(243, 73, 16, 1, '2014-09-26 00:13:23', '2014-09-26 00:13:23');
+INSERT INTO `votes` VALUES(244, 45, 42, -1, '2014-09-26 00:14:16', '2014-09-26 00:14:16');
+INSERT INTO `votes` VALUES(245, 43, 42, -1, '2014-09-26 00:14:23', '2014-09-26 00:14:23');
+INSERT INTO `votes` VALUES(246, 32, 42, -1, '2014-09-26 00:15:02', '2014-09-26 00:15:02');
+INSERT INTO `votes` VALUES(247, 70, 32, 1, '2014-09-26 00:15:08', '2014-09-26 00:15:08');
+INSERT INTO `votes` VALUES(248, 56, 32, -1, '2014-09-26 00:15:11', '2014-09-26 00:15:11');
+INSERT INTO `votes` VALUES(249, 45, 32, -1, '2014-09-26 00:15:18', '2014-09-26 00:15:18');
+INSERT INTO `votes` VALUES(250, 71, 42, 1, '2014-09-26 00:15:25', '2014-09-26 00:15:25');
+INSERT INTO `votes` VALUES(251, 73, 32, -1, '2014-09-26 00:15:32', '2014-09-26 00:15:32');
+INSERT INTO `votes` VALUES(252, 47, 32, -1, '2014-09-26 00:15:41', '2014-09-26 00:15:41');
+INSERT INTO `votes` VALUES(253, 70, 42, -1, '2014-09-26 00:15:53', '2014-09-26 00:15:53');
+INSERT INTO `votes` VALUES(254, 36, 42, -1, '2014-09-26 00:23:45', '2014-09-26 00:23:45');
+INSERT INTO `votes` VALUES(255, 34, 42, -1, '2014-09-26 00:23:47', '2014-09-26 00:23:47');
+INSERT INTO `votes` VALUES(256, 30, 42, -1, '2014-09-26 00:23:49', '2014-09-26 00:23:49');
+INSERT INTO `votes` VALUES(257, 39, 42, -1, '2014-09-26 00:23:53', '2014-09-26 00:23:53');
+INSERT INTO `votes` VALUES(258, 41, 42, -1, '2014-09-26 00:23:56', '2014-09-26 00:23:56');
+INSERT INTO `votes` VALUES(259, 37, 42, -1, '2014-09-26 00:23:58', '2014-09-26 00:23:58');
+INSERT INTO `votes` VALUES(260, 27, 42, -1, '2014-09-26 00:24:02', '2014-09-26 00:24:02');
+INSERT INTO `votes` VALUES(261, 42, 42, -1, '2014-09-26 00:24:04', '2014-09-26 00:24:04');
+INSERT INTO `votes` VALUES(262, 49, 42, -1, '2014-09-26 00:24:06', '2014-09-26 00:24:06');
+INSERT INTO `votes` VALUES(263, 69, 42, 1, '2014-09-26 00:24:11', '2014-09-26 00:24:11');
+INSERT INTO `votes` VALUES(264, 72, 42, -1, '2014-09-26 00:24:17', '2014-09-26 00:24:17');
+INSERT INTO `votes` VALUES(265, 61, 42, -1, '2014-09-26 00:24:20', '2014-09-26 00:24:20');
+INSERT INTO `votes` VALUES(266, 60, 42, 1, '2014-09-26 00:24:23', '2014-09-26 00:24:23');
+INSERT INTO `votes` VALUES(267, 65, 21, 1, '2014-09-26 00:37:48', '2014-09-26 00:37:48');
+INSERT INTO `votes` VALUES(268, 70, 21, 1, '2014-09-26 00:38:05', '2014-09-26 00:38:05');
+INSERT INTO `votes` VALUES(269, 32, 21, -1, '2014-09-26 00:38:21', '2014-09-26 00:38:21');
+INSERT INTO `votes` VALUES(270, 67, 18, 1, '2014-09-26 01:07:52', '2014-09-26 01:07:52');
+INSERT INTO `votes` VALUES(271, 57, 18, 1, '2014-09-26 01:07:59', '2014-09-26 01:07:59');
+INSERT INTO `votes` VALUES(272, 59, 18, 1, '2014-09-26 01:08:07', '2014-09-26 01:08:07');
+INSERT INTO `votes` VALUES(273, 48, 18, 1, '2014-09-26 01:08:09', '2014-09-26 01:08:09');
+INSERT INTO `votes` VALUES(274, 48, 21, 1, '2014-09-26 01:26:37', '2014-09-26 01:26:37');
+INSERT INTO `votes` VALUES(275, 58, 21, -1, '2014-09-26 01:26:55', '2014-09-26 01:26:55');
+INSERT INTO `votes` VALUES(276, 68, 21, 1, '2014-09-26 01:27:01', '2014-09-26 01:27:01');
+INSERT INTO `votes` VALUES(277, 69, 21, 1, '2014-09-26 01:27:07', '2014-09-26 01:27:07');
+INSERT INTO `votes` VALUES(278, 49, 21, -1, '2014-09-26 01:28:09', '2014-09-26 01:28:09');
+INSERT INTO `votes` VALUES(279, 37, 21, -1, '2014-09-26 01:28:16', '2014-09-26 01:41:31');
+INSERT INTO `votes` VALUES(280, 41, 21, -1, '2014-09-26 01:28:19', '2014-09-26 01:28:19');
+INSERT INTO `votes` VALUES(281, 34, 21, -1, '2014-09-26 01:28:20', '2014-09-26 01:28:20');
+INSERT INTO `votes` VALUES(282, 39, 21, -1, '2014-09-26 01:28:24', '2014-09-26 01:28:24');
+INSERT INTO `votes` VALUES(283, 42, 21, -1, '2014-09-26 01:28:48', '2014-09-26 01:28:48');
+INSERT INTO `votes` VALUES(284, 36, 21, -1, '2014-09-26 01:28:55', '2014-09-26 01:28:55');
+INSERT INTO `votes` VALUES(285, 38, 21, -1, '2014-09-26 01:29:04', '2014-09-26 01:29:04');
+INSERT INTO `votes` VALUES(286, 47, 21, -1, '2014-09-26 01:29:05', '2014-09-26 01:29:05');
+INSERT INTO `votes` VALUES(287, 72, 21, -1, '2014-09-26 01:29:10', '2014-09-26 01:29:10');
+INSERT INTO `votes` VALUES(288, 61, 21, 1, '2014-09-26 01:29:14', '2014-09-26 01:29:14');
+INSERT INTO `votes` VALUES(289, 73, 21, -1, '2014-09-26 01:29:19', '2014-09-26 01:29:19');
+INSERT INTO `votes` VALUES(290, 45, 21, -1, '2014-09-26 01:29:35', '2014-09-26 01:29:35');
+INSERT INTO `votes` VALUES(291, 35, 21, 1, '2014-09-26 01:40:27', '2014-09-26 01:40:27');
+INSERT INTO `votes` VALUES(292, 71, 21, 1, '2014-09-26 01:40:34', '2014-09-26 01:40:34');
+INSERT INTO `votes` VALUES(293, 31, 21, -1, '2014-09-26 01:40:35', '2014-09-26 01:40:35');
+INSERT INTO `votes` VALUES(294, 57, 21, -1, '2014-09-26 01:40:38', '2014-09-26 01:40:38');
+INSERT INTO `votes` VALUES(295, 33, 21, -1, '2014-09-26 01:40:52', '2014-09-26 01:40:52');
+INSERT INTO `votes` VALUES(296, 59, 21, 1, '2014-09-26 01:41:01', '2014-09-26 01:41:01');
+INSERT INTO `votes` VALUES(297, 74, 21, 1, '2014-09-26 01:41:15', '2014-09-26 01:41:15');
+INSERT INTO `votes` VALUES(298, 56, 21, 1, '2014-09-26 01:41:18', '2014-09-26 01:41:18');
+INSERT INTO `votes` VALUES(299, 81, 21, -1, '2014-09-26 01:41:38', '2014-09-26 01:41:38');
+INSERT INTO `votes` VALUES(300, 26, 46, 1, '2014-09-26 01:43:59', '2014-09-26 01:43:59');
+INSERT INTO `votes` VALUES(301, 65, 46, 1, '2014-09-26 01:44:03', '2014-09-26 01:44:03');
+INSERT INTO `votes` VALUES(302, 48, 46, 1, '2014-09-26 01:44:30', '2014-09-26 01:44:30');
+INSERT INTO `votes` VALUES(303, 35, 46, -1, '2014-09-26 01:44:38', '2014-09-26 01:44:38');
+INSERT INTO `votes` VALUES(304, 50, 21, -1, '2014-09-26 04:32:12', '2014-09-26 04:32:12');
+INSERT INTO `votes` VALUES(305, 43, 21, -1, '2014-09-26 04:32:21', '2014-09-26 04:32:21');
+INSERT INTO `votes` VALUES(306, 67, 21, 1, '2014-09-26 07:41:23', '2014-09-26 07:41:23');
+INSERT INTO `votes` VALUES(307, 51, 21, -1, '2014-09-26 07:41:33', '2014-09-26 07:41:33');
+INSERT INTO `votes` VALUES(308, 60, 21, 1, '2014-09-26 07:41:37', '2014-09-26 07:41:37');
+INSERT INTO `votes` VALUES(309, 28, 21, 1, '2014-09-26 07:56:07', '2014-09-26 07:56:07');
+INSERT INTO `votes` VALUES(310, 75, 31, 1, '2014-09-26 17:22:30', '2014-09-26 17:22:30');
+INSERT INTO `votes` VALUES(311, 62, 21, -1, '2014-09-27 01:45:48', '2014-09-27 01:45:48');
+INSERT INTO `votes` VALUES(312, 63, 21, -1, '2014-09-27 01:45:50', '2014-09-27 01:45:50');
+INSERT INTO `votes` VALUES(313, 64, 21, -1, '2014-09-27 01:45:51', '2014-09-27 01:45:51');
+INSERT INTO `votes` VALUES(314, 55, 21, 1, '2014-09-27 02:51:39', '2014-09-27 02:51:48');
+INSERT INTO `votes` VALUES(315, 82, 31, 1, '2014-09-29 17:29:39', '2014-09-29 17:29:39');
+INSERT INTO `votes` VALUES(316, 31, 50, 1, '2014-09-30 15:38:05', '2014-09-30 15:38:05');
+INSERT INTO `votes` VALUES(317, 60, 50, 1, '2014-09-30 15:38:11', '2014-09-30 15:38:11');
+INSERT INTO `votes` VALUES(318, 69, 50, 1, '2014-09-30 15:38:15', '2014-09-30 15:38:15');
+INSERT INTO `votes` VALUES(319, 56, 50, -1, '2014-09-30 15:40:50', '2014-09-30 15:40:50');
+INSERT INTO `votes` VALUES(320, 82, 50, -1, '2014-09-30 15:40:57', '2014-09-30 15:40:57');
+INSERT INTO `votes` VALUES(321, 54, 21, -1, '2014-10-05 04:03:19', '2014-10-05 04:03:19');

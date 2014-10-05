@@ -2,7 +2,7 @@
 angular.module('mainCtrl', [])
 
     // inject the Snack service into our controller
-    .controller('mainController', function($scope, $http, Snack) {
+    .controller('mainController', function($scope, $http, $location, $anchorScroll, Snack) {
 
         // sort by controvery rating
         $scope.Math = window.Math;
@@ -51,7 +51,11 @@ angular.module('mainCtrl', [])
             if (interval >= 1) {
                 return interval + "m";
             }
-            return Math.floor(seconds) + "s";
+            interval = Math.floor(seconds);
+            if (interval < 0) {
+                interval = 0;
+            }
+            return interval + "s";
         };
 
         // set default sort values
@@ -95,7 +99,12 @@ angular.module('mainCtrl', [])
                     snack = data.snack;
                     snack.sum_votes = snack.upvotes - snack.downvotes;
                     snack.vote_value = 0;
+                    snack.comments = [];
                     $scope.snacks.push(snack);
+
+                    // scroll snack into view
+                    //$location.hash('snack-' + snack.id);
+                    //$anchorScroll();
                 })
                 .error(function(data) {
                     console.log(data);

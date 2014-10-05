@@ -66,8 +66,11 @@
                 <label class="btn btn-default active" data-ng-click="predicate = 'sum_votes'; reverse=true">
                     <input type="radio" name="options" id="option1" checked>Popular
                 </label>
+                <label class="btn btn-default" data-ng-click="predicate = 'created_at'; reverse=true">
+                    <input type="radio" name="options" id="option2" checked>New
+                </label>
                 <label class="btn btn-default" data-ng-click="predicate = controversySort; reverse=true">
-                    <input type="radio" name="options" id="option2">Controversial
+                    <input type="radio" name="options" id="option3">Controversial
                 </label>
             </div>
         </form>
@@ -78,7 +81,7 @@
         <!-- hide these cnacks if the loading variable is true -->
         <div class="snack-list-item" data-ng-hide="loading"
              data-ng-repeat="snack in snacks | filter:snackData.name | filter:{group_id:selected.group.id} | orderBy: predicate:reverse"
-             data-ng-controller="voteController" >
+             data-ng-controller="voteController" id="snack-{{ snack.id }}">
             <div >
                 <div class="arrow-container">
                     <div data-ng-class="snack.vote_value == -1 ? 'arrow-down selected' : 'arrow-down'"
