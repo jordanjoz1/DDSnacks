@@ -51,6 +51,9 @@ class VoteController extends \BaseController {
         $id = Request::get('id');
         $value = Request::get('value');
 
+        // make the entire vote a transaction
+        DB::beginTransaction();
+
         // attempt to get existing vote
         $vote = Vote::where('snack_id', $id)
             ->where('user_id', Auth::user()->id)
@@ -97,6 +100,9 @@ class VoteController extends \BaseController {
             }
         }
         $snack->save();
+
+        // commit transaction
+        DB::commit();
 
         return Response::json(array(
                 'error' => false,
