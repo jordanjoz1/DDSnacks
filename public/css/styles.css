@@ -1,3 +1,38 @@
+/*==================================================
+=     Styles that vary with screen size            =
+==================================================*/
+
+/* Custom, iPhone Retina through phones */
+@media only screen and (min-width : 320px) {
+    .comments {
+        width: 88%;
+        margin: auto;
+    }
+
+    .comment-input-group {
+        width: 90%;
+        margin: auto;
+    }
+}
+
+/* Small Devices, Tablets and Desktops */
+@media only screen and (min-width : 768px) {
+    .comments {
+        width: 58%;
+        margin: auto;
+    }
+
+    .comment-input-group {
+        width: 60%;
+        margin: auto;
+    }
+}
+
+/*==================================================
+=    All other styles                              =
+==================================================*/
+
+
 body 		{ padding-top:30px; }
 form 		{ padding-bottom:20px; }
 
@@ -132,12 +167,8 @@ h1 {
     color: #C6C6C6;
 }
 
-.comment-input-group {
-    width: 60%;
-    margin: auto;
-}
-
 .comment-form {
+    margin-top: 10px;
     padding-bottom: 0px;
 }
 

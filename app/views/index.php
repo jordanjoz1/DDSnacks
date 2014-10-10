@@ -50,28 +50,32 @@
             <!-- ng-submit will disable the default form action and use our function -->
             <!-- ROOM FILTER =============================================== -->
             <select class="form-control" data-ng-model="selected.group"
-                    data-ng-options="group.name for group in groups"></select>
+                    data-ng-options="group.name for group in groups">
+                <option value="">Select a snack room</option>
+            </select>
             <br/>
-            <div class="entry input-group">
-                <input type="text" class="form-control input-lg" name="snack" data-ng-model="snackData.name"
-                       placeholder="Search or add a new snack" maxlength="50" id="snack-input"/>
-                <span class="input-group-btn">
-                    <button class="btn btn-success btn-add btn-lg" type="submit">
-                        <span class="glyphicon glyphicon-plus"></span>
-                    </button>
-                </span>
-            </div>
-            <br/>
-            <div class="btn-group btn-group-sm btn-group-justified" data-toggle="buttons">
-                <label class="btn btn-default active" data-ng-click="predicate = 'sum_votes'; reverse=true">
-                    <input type="radio" name="options" id="option1" checked>Popular
-                </label>
-                <label class="btn btn-default" data-ng-click="predicate = 'created_at'; reverse=true">
-                    <input type="radio" name="options" id="option2" checked>New
-                </label>
-                <label class="btn btn-default" data-ng-click="predicate = controversySort; reverse=true">
-                    <input type="radio" name="options" id="option3">Controversial
-                </label>
+            <div data-ng-show="selected.group">
+                <div class="entry input-group">
+                    <input type="text" class="form-control input-lg" name="snack" data-ng-model="snackData.name"
+                           placeholder="Search or add something new" maxlength="50" id="snack-input"/>
+                    <span class="input-group-btn">
+                        <button class="btn btn-success btn-add btn-lg" type="submit">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                    </span>
+                </div>
+                <br/>
+                <div class="btn-group btn-group-sm btn-group-justified" data-toggle="buttons">
+                    <label class="btn btn-default active" data-ng-click="predicate = 'sum_votes'; reverse=true">
+                        <input type="radio" name="options" id="option1" checked>Popular
+                    </label>
+                    <label class="btn btn-default" data-ng-click="predicate = 'created_at'; reverse=true">
+                        <input type="radio" name="options" id="option2" checked>New
+                    </label>
+                    <label class="btn btn-default" data-ng-click="predicate = controversySort; reverse=true">
+                        <input type="radio" name="options" id="option3">Controversial
+                    </label>
+                </div>
             </div>
         </form>
 
@@ -79,7 +83,7 @@
 
         <!-- THE SNACKS =============================================== -->
         <!-- hide these cnacks if the loading variable is true -->
-        <div class="snack-list-item" data-ng-hide="loading"
+        <div class="snack-list-item" data-ng-show="selected.group && !loading"
              data-ng-repeat="snack in snacks | filter:snackData.name | filter:{group_id:selected.group.id} | orderBy: predicate:reverse"
              data-ng-controller="voteController" id="snack-{{ snack.id }}">
             <div >
@@ -101,9 +105,8 @@
                 </div>
             </div>
             <div class="collapse" id="comments-{{ snack.id }}" >
-                <div  data-ng-repeat="comment in snack.comments" data-toggle="collapse" data-target="#comments-{{ snack.id }}">
-                    <div class="col-md-4 username text-right">{{ comment.user.email.split('@')[0].split('+')[0] }}</div>
-                    <div class="col-md-8 text-left">{{ comment.comment }} <div class="timestamp">{{ timeSince(comment.created_at) }}</div></div>
+                <div class="comments text-left" data-ng-repeat="comment in snack.comments" data-toggle="collapse" data-target="#comments-{{ snack.id }}">
+                    <div><div class="username">{{ comment.user.email.split('@')[0].split('+')[0] }}</div> {{ comment.comment }} <div class="timestamp">{{ timeSince(comment.created_at) }}</div></div>
                 </div>
                 <form data-ng-submit="submitComment(snack.id)" data-ng-controller="commentController" class="comment-form">
                     <div class="input-group comment-input-group">
