@@ -47,3 +47,7 @@ Route::get('login', array('uses' => 'UsersController@login'));
 Route::post('login', array('uses' => 'UsersController@postLogin'));
 
 Route::get('logout', array('uses' => 'UsersController@logout'));
+
+Route::get('top', array('before' => 'auth', 'uses' => 'HomeController@top'));
+
+Route::get('export', array('before' => 'auth', 'uses' => 'HomeController@export'));
