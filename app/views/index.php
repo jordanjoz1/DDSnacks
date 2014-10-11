@@ -50,7 +50,7 @@
             <!-- ng-submit will disable the default form action and use our function -->
             <!-- ROOM FILTER =============================================== -->
             <select class="form-control" data-ng-model="selected.group"
-                    data-ng-options="group.name for group in groups">
+                    data-ng-options="group.name for group in groups | orderBy:'name' : true">
                 <option value="">Select a snack room</option>
             </select>
             <br/>
