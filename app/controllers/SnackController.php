@@ -50,6 +50,22 @@ class SnackController extends \BaseController {
             );
         }
 
+        // make the entire vote a transaction
+        DB::beginTransaction();
+
+        // check if snack already exists (since the unique is across two
+        // columns I can't check for this in the validator
+        $snack = Snack::where('name', Request::get('name'))
+            ->where('group_id', Request::get('group_id'))
+            ->first();
+        if (!empty($snack)) {
+            return Response::json(array(
+                    'error' => true,
+                    'message' => 'Snack with that name already exists in this group'),
+                200
+            );
+        }
+
 		$snack = new Snack;
         $snack->name = Request::get('name');
         $snack->description = Request::get('description');
@@ -59,6 +75,9 @@ class SnackController extends \BaseController {
         $snack->downvotes = 0;
         
         $snack->save();
+
+        // make the entire vote a transaction
+        DB::commit();
         
         return Response::json(array(
             'error' => false,
