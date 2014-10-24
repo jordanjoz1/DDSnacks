@@ -40,6 +40,11 @@ Route::group(array('prefix' => 'api/v1', 'before' => 'auth.basic'), function()
     Route::resource('comment', 'CommentController');
 });
 
+Route::group(array('before' => 'auth.basic'), function()
+{
+    Route::controller('export', 'ExportController');
+});
+
 Route::controller('users', 'UsersController');
 
 Route::get('login', array('uses' => 'UsersController@login'));
@@ -48,6 +53,6 @@ Route::post('login', array('uses' => 'UsersController@postLogin'));
 
 Route::get('logout', array('uses' => 'UsersController@logout'));
 
-Route::get('top', array('before' => 'auth', 'uses' => 'HomeController@top'));
-
-Route::get('export', array('before' => 'auth', 'uses' => 'HomeController@export'));
+// legacy methods for getting data - should be removed
+Route::get('top', array('before' => 'auth', 'uses' => 'ExportController@getTop'));
+Route::get('export', array('before' => 'auth', 'uses' => 'ExportController@getExport'));
