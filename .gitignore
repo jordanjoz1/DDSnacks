@@ -18,3 +18,4 @@ Thumbs.db
 .idea/codeStyleSettings.xml
 bak/20141010.sql
 bak/20141004.sql
+app/config/google.php
