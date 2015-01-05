@@ -18,17 +18,14 @@
 
       <div id="gConnect">
       <h3 id="info-text">Login with your <strong>@doubledutch.me</strong> account</h3>
-    <button class="g-signin"
+    <span class="g-signin"
         data-scope="email"
         data-clientId="{{ $CLIENT_ID }}"
-        data-redirect_uri="http://ddsnacks.com/login"
-        data-prompt="select_account"
-        data-hd="doubledutch.me"
         data-accesstype="offline"
         data-callback="onSignInCallback"
         data-theme="dark"
         data-cookiepolicy="single_host_origin">
-    </button>
+    </span>
    <div class="footer" data-ng-hide="loading"><a href="mailto:jordan@doubledutch.me?Subject=DD%20Snacks%20feedback">Send feedback</a></div>
 <script type="text/javascript">
 var helper = (function() {
