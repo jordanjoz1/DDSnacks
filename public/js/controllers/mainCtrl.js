@@ -88,6 +88,11 @@ angular.module('mainCtrl', [])
         // SAVE A SNACK ======================================================
         $scope.submitSnack = function() {
 
+            // don't do anything if group is not editable
+            if ($scope.selected.group.editable == 0) {
+                return;
+            }
+        
             // set group id
             $scope.snackData.group_id = $scope.selected.group.id;
 

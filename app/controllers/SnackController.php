@@ -49,6 +49,19 @@ class SnackController extends \BaseController {
                 200
             );
         }
+        
+        // make sure that group is editable
+        $group = Group::where('id', Request::get('group_id'))
+            ->first();
+        if (!empty($group)) {
+            if (!$group->editable) {
+                return Response::json(array(
+                    'error' => true,
+                    'message' => 'This group is not editable'),
+                200);
+            }
+        }
+        
 
         // make the entire vote a transaction
         DB::beginTransaction();

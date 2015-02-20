@@ -21,7 +21,8 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.min.js"></script>
-
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular-sanitize.js"></script>
+    
     <!-- ANGULAR -->
     <script src="js/controllers/mainCtrl.js"></script>
     <script src="js/services/snackService.js"></script>
@@ -57,10 +58,11 @@
             <div data-ng-show="selected.group">
                 <div class="entry input-group">
                     <input type="text" class="form-control input-lg" name="snack" data-ng-model="snackData.name"
-                           placeholder="Search or add something new" maxlength="50" id="snack-input"/>
+                           placeholder="Search {{selected.group.editable == 1 ? 'or add something new' : 'the provided options'}} " maxlength="50" id="snack-input"/>
                     <span class="input-group-btn">
                         <button class="btn btn-success btn-add btn-lg" type="submit">
-                            <span class="glyphicon glyphicon-plus"></span>
+                            <span class="glyphicon glyphicon-plus" data-ng-show="selected.group.editable"></span>
+                            <span class="glyphicon glyphicon-search" data-ng-hide="selected.group.editable"></span>
                         </button>
                     </span>
                 </div>
@@ -106,7 +108,7 @@
             </div>
             <div class="collapse" id="comments-{{ snack.id }}" >
                 <div class="comments text-left" data-ng-repeat="comment in snack.comments" data-toggle="collapse" data-target="#comments-{{ snack.id }}">
-                    <div><div class="username">{{ comment.user.email.split('@')[0].split('+')[0] }}</div> {{ comment.comment }} <div class="timestamp">{{ timeSince(comment.created_at) }}</div></div>
+                    <div><div class="username">{{ comment.user.email.split('@')[0].split('+')[0] }}</div> <span ng-bind-html="comment.comment | linky:'_blank'"></span> <div class="timestamp">{{ timeSince(comment.created_at) }}</div></div>
                 </div>
                 <form data-ng-submit="submitComment(snack.id)" data-ng-controller="commentController" class="comment-form">
                     <div class="input-group comment-input-group">
