@@ -8,16 +8,34 @@ class SnackController extends \BaseController {
 	 * @return Response
 	 */
 	public function index()
-	{
-        // get snacks
-        $snacks = Snack::with('comments', 'comments.user')
-            ->leftJoin('votes', function($join)
-            {
-                $join->on('snacks.id', '=', 'votes.snack_id')
-                    ->where('votes.user_id', '=', Auth::user()->id);
-            })
-            ->select('snacks.*', 'votes.value as vote_value')
-            ->get();
+    {
+        $groupId = Input::get('group');
+        if (!empty($groupId)) {
+            $snacks = Snack::with('comments', 'comments.user')
+                ->leftJoin('votes', function ($join) {
+                    $join->on('snacks.id', '=', 'votes.snack_id')
+                        ->where('votes.user_id', '=', Auth::user()->id);
+                })
+                ->leftJoin('groups', function ($join) {
+                    $join->on('snacks.group_id', '=', 'groups.id')
+                        ->where('groups.name', '=', urldecode(Input::get('group')));
+                })
+                ->select('snacks.*', 'votes.value as vote_value')
+                ->where('groups.name', urldecode(Input::get('group')))
+                ->get();
+        } else {
+            $snacks = Snack::with('comments', 'comments.user')
+                ->leftJoin('votes', function ($join) {
+                    $join->on('snacks.id', '=', 'votes.snack_id')
+                        ->where('votes.user_id', '=', Auth::user()->id);
+                })
+                ->leftJoin('groups', function ($join) {
+                    $join->on('snacks.group_id', '=', 'groups.id');
+                })
+                ->select('snacks.*', 'votes.value as vote_value')
+                ->where('groups.global', true)
+                ->get();
+        }
 
         return Response::json(array(
             'error' => false,

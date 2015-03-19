@@ -8,7 +8,7 @@ angular.module('voteService', [])
             save : function(voteData) {
                 return $http({
                     method: 'POST',
-                    url: 'index.php/api/v1/vote',
+                    url: '../../index.php/api/v1/vote',
                     headers: { 'Content-Type' : 'application/x-www-form-urlencoded' },
                     data: $.param(voteData)
                 });

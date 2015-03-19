@@ -1,6 +1,6 @@
 <?php
 
-class GroupController extends \BaseController {
+class PageController extends \BaseController {
 
 	/**
 	 * Display a listing of the resource.
@@ -9,16 +9,7 @@ class GroupController extends \BaseController {
 	 */
 	public function index()
 	{
-        // make sure current user owns the requested resource
-        $groups = DB::table('groups')
-            ->where('global', true)
-            ->get();
-
-        return Response::json(array(
-                'error' => false,
-                'groups' => $groups),
-            200
-        );
+        return View::make('group_page');
 	}
 
 
@@ -50,18 +41,25 @@ class GroupController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($groupName)
+	public function show($id)
 	{
-        // make sure current user owns the requested resource
-        $groups = DB::table('groups')
-            ->where('name', urldecode($groupName))
-            ->get();
+        DB::beginTransaction();
 
-        return Response::json(array(
-                'error' => false,
-                'groups' => $groups),
-            200
-        );
+        // make sure that group is editable
+        $group = Group::where('name', urldecode($id))
+            ->first();
+
+        // create new group if necessary
+        if (empty($group)) {
+            $snack = new Group;
+            $snack->name = urldecode($id);
+            $snack->created_by = Auth::user()->id;
+            $snack->save();
+        }
+
+        DB::commit();
+
+        return View::make('group_page');
 	}
 
 

@@ -4,9 +4,13 @@ angular.module('groupService', [])
     .factory('Group', function($http) {
 
         return {
-            // get all the groups
-            get : function() {
-                return $http.get('index.php/api/v1/group');
+            // get all groups or an individual group
+            get: function (id) {
+                if (id == null) {
+                    return $http.get('../../index.php/api/v1/group');
+                } else {
+                    return $http.get('../../index.php/api/v1/group/' + id);
+                }
             }
         }
 

@@ -12,7 +12,7 @@
     <!-- load bootstrap via cdn -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
     <!-- load fontawesome -->
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="../../css/styles.css">
     <style>
         @import url(//fonts.googleapis.com/css?family=Lato:700);
     </style>
@@ -20,18 +20,18 @@
     <!-- JS -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular-sanitize.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script>
     
     <!-- ANGULAR -->
-    <script src="js/controllers/mainCtrl.js"></script>
-    <script src="js/services/snackService.js"></script>
-    <script src="js/services/voteService.js"></script>
-    <script src="js/services/groupService.js"></script>
-    <script src="js/services/commentService.js"></script>
-    <script src="js/app.js"></script>
-    <script src="js/libs/bootstrap-maxlength.min.js"></script>
+    <script src="../../js/controllers/mainCtrl.js"></script>
+    <script src="../../js/services/snackService.js"></script>
+    <script src="../../js/services/voteService.js"></script>
+    <script src="../../js/services/groupService.js"></script>
+    <script src="../../js/services/commentService.js"></script>
+    <script src="../../js/app.js"></script>
+    <script src="../../js/libs/bootstrap-maxlength.min.js"></script>
 
 </head>
 <body class="container" data-ng-app="snackApp" data-ng-controller="mainController">
@@ -40,7 +40,7 @@
 
         <!-- PAGE TITLE =============================================== -->
         <div class="page-header">
-            <h2>DD Snacks</h2>
+            <h2>DD Vote</h2>
         </div>
 
         <!-- LOADING ICON =============================================== -->
@@ -51,7 +51,7 @@
         <form data-ng-submit="submitSnack()" data-ng-hide="loading">
             <!-- ng-submit will disable the default form action and use our function -->
             <!-- ROOM FILTER =============================================== -->
-            <select class="form-control" data-ng-model="selected.group"
+            <select class="form-control" data-ng-model="selected.group" data-ng-hide="groups.length < 2"
                     data-ng-options="group.name for group in groups | orderBy:'name' : true">
                 <option value="">Select a snack room</option>
             </select>
@@ -108,7 +108,7 @@
                 </div>
             </div>
             <div class="collapse" id="comments-{{ snack.id }}" >
-                <div class="comments text-left" data-ng-repeat="comment in snack.comments" data-toggle="collapse" data-target="#comments-{{ snack.id }}">
+                <div class="comments text-left" data-ng-repeat="comment in snack.comments" data-target="#comments-{{ snack.id }}">
                     <div><div class="username">{{ comment.user.email.split('@')[0].split('+')[0] }}</div> <span ng-bind-html="comment.comment | linky:'_blank'"></span> <div class="timestamp">{{ timeSince(comment.created_at) }}</div></div>
                 </div>
                 <form data-ng-submit="submitComment(snack.id)" data-ng-controller="commentController" class="comment-form">

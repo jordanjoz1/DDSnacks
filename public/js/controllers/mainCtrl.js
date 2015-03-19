@@ -1,8 +1,8 @@
 // public/js/controllers/mainCtrl.js
-angular.module('mainCtrl', [])
+angular.module('mainCtrl', ['ngRoute'])
 
     // inject the Snack service into our controller
-    .controller('mainController', function($scope, $http, $location, $anchorScroll, Snack) {
+    .controller('mainController', function($scope, $http, $location, $anchorScroll, $routeParams, Snack) {
 
         // sort by controvery rating
         $scope.Math = window.Math;
@@ -71,10 +71,18 @@ angular.module('mainCtrl', [])
         // loading variable to show the spinning loading icon
         $scope.loading = true;
 
+        // get group id from path
+        $path = $location.path().split("/");
+        $groupId = $path.pop();
+        $pathType = $path.pop();
+        if ($pathType != "g") {
+            $groupId = null;
+        }
+
         // get all the snacks first and bind it to the $scope.snacks object
         // use the function we created in our service
         // GET ALL SNACKS ====================================================
-        Snack.get()
+        Snack.get($groupId)
             .success(function(data) {
                 // calculate sum of votes
                 for (var i in data.snacks) {
@@ -149,9 +157,17 @@ angular.module('mainCtrl', [])
     })
 
     // inject the Group service into our controller
-    .controller('groupController', function($scope, $http, Group) {
+    .controller('groupController', function($scope, $http, $location, Group) {
 
-        Group.get()
+        // get group id from path
+        $path = $location.path().split("/");
+        $groupId = $path.pop();
+        $pathType = $path.pop();
+        if ($pathType != "g") {
+            $groupId = null;
+        }
+
+        Group.get($groupId)
             .success(function(data) {
                 $scope.groups = data.groups;
                 // automatically select the first group
@@ -163,15 +179,15 @@ angular.module('mainCtrl', [])
     // inject the comment service into our controller
     .controller('commentController', function($scope, $http, Comment) {
 
-        $scope.submitComment = function(snackId) {
+        $scope.submitComment = function (snackId) {
 
             // save the snack. pass in snack data from the form
             // use the function we created in our service
             Comment.save({id: snackId, comment: $scope.commentText})
-                .success(function(data) {
+                .success(function (data) {
                     if (!data.error) {
                         // add to snack's comments
-                        for (index = 0; index < $scope.snacks.length; index++ ){
+                        for (index = 0; index < $scope.snacks.length; index++) {
                             if ($scope.snacks[index].id == data.comment.snack_id) {
                                 $scope.snacks[index].comments.push(data.comment);
                                 break;
@@ -179,7 +195,7 @@ angular.module('mainCtrl', [])
                         }
                     }
                 })
-                .error(function(data) {
+                .error(function (data) {
                     console.log(data);
                 });
 
@@ -187,5 +203,16 @@ angular.module('mainCtrl', [])
             // clear input
             $scope.commentText = null;
         }
+    })
+
+    .config(function ($routeProvider, $locationProvider) {
+        $routeProvider
+            .when('/index.php/g/:groupId', {
+                controller: 'MainController'
+            });
+
+        // configure html5 to get links working on jsfiddle
+        $locationProvider.html5Mode(true);
+
 
     });

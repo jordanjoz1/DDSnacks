@@ -8,7 +8,7 @@ angular.module('commentService', [])
             save: function (commentData) {
                 return $http({
                     method: 'POST',
-                    url: 'index.php/api/v1/comment',
+                    url: '../../index.php/api/v1/comment',
                     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                     data: $.param(commentData)
                 });

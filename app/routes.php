@@ -20,6 +20,11 @@ Validator::extend('DDEmail', function($attribute, $value, $parameters)
 
 Route::get('/', array('before' => 'auth', 'uses' => 'HomeController@showMainPage'));
 
+Route::group(array(), function()
+{
+    Route::resource('g', 'PageController');
+});
+
 Route::group(array('prefix' => 'api/v1', 'before' => 'auth.basic'), function()
 {
     Route::resource('snack', 'SnackController');

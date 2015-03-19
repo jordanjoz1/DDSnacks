@@ -19,6 +19,7 @@ class CreateGroupsTable extends Migration {
             $table->string('description');
             $table->integer('created_by')->unsigned();
             $table->boolean('editable')->default(true);
+            $table->boolean('global')->default(false);
             $table->timestamps();
 		});
         
