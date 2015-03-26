@@ -2,7 +2,7 @@
 angular.module('mainCtrl', ['ngRoute'])
 
     // inject the Snack service into our controller
-    .controller('mainController', function($scope, $http, $location, $anchorScroll, $routeParams, Snack) {
+    .controller('mainController', function($scope, $http, $location, $anchorScroll, $routeParams, Snack, User, Group) {
 
         // sort by controvery rating
         $scope.Math = window.Math;
@@ -79,18 +79,50 @@ angular.module('mainCtrl', ['ngRoute'])
             $groupId = null;
         }
 
-        // get all the snacks first and bind it to the $scope.snacks object
-        // use the function we created in our service
-        // GET ALL SNACKS ====================================================
-        Snack.get($groupId)
-            .success(function(data) {
-                // calculate sum of votes
-                for (var i in data.snacks) {
-                    data.snacks[i].sum_votes = data.snacks[i].upvotes - data.snacks[i].downvotes;
-                }
-                $scope.snacks = data.snacks;
-                $scope.loading = false;
+        $loadData = function() {
+            // get all the snacks first and bind it to the $scope.snacks object
+            // use the function we created in our service
+            // GET ALL SNACKS ====================================================
+            Snack.get($groupId)
+                .success(function(data) {
+                    // calculate sum of votes
+                    for (var i in data.snacks) {
+                        data.snacks[i].sum_votes = data.snacks[i].upvotes - data.snacks[i].downvotes;
+                    }
+                    $scope.snacks = data.snacks;
+                    $scope.loading = false;
+                });
+
+            Group.get($groupId)
+                .success(function(data) {
+                    $scope.groups = data.groups;
+                    // automatically select the first group
+                    $scope.selected.group = data.groups[0];
+                });
+        };
+
+        // use pride login for specific groups
+        if ($groupId != null) {
+            DD.Events.onReady(function() {
+                DD.Events.getCurrentUserAsync(function (user) {
+                    $test = new Object();
+                    $test.userId = user.UserId;
+                    $test.firstName = user.FirstName;
+                    $test.lastName = user.LastName;
+                    User.save($test)
+                        .success(function (data) {
+                            // check for failure
+                            if (data.error) {
+                                alert(data.message);
+                                return;
+                            }
+                            $loadData();
+                        })
+                });
             });
+        } else {
+            $loadData()
+        }
 
         // function to handle submitting the form
         // SAVE A SNACK ======================================================
@@ -158,22 +190,7 @@ angular.module('mainCtrl', ['ngRoute'])
 
     // inject the Group service into our controller
     .controller('groupController', function($scope, $http, $location, Group) {
-
-        // get group id from path
-        $path = $location.path().split("/");
-        $groupId = $path.pop();
-        $pathType = $path.pop();
-        if ($pathType != "g") {
-            $groupId = null;
-        }
-
-        Group.get($groupId)
-            .success(function(data) {
-                $scope.groups = data.groups;
-                // automatically select the first group
-                $scope.selected.group = data.groups[0];
-            });
-
+        // make architecture better
     })
 
     // inject the comment service into our controller

@@ -86,6 +86,57 @@ class UsersController extends \BaseController {
 	{
 		//
 	}
+
+    public function postPrideLogin()
+    {
+        // validate user input
+        $rules = array(
+            'userId' => 'required|integer',
+            'firstName' => 'required',
+            'lastName' => 'required'
+        );
+        $validator = Validator::make(Input::all(), $rules);
+        if($validator->fails())
+        {
+            $errors = $validator->errors();
+            return Response::json(array(
+                    'error' => true,
+                    'message' => $errors->toArray()),
+                200
+            );
+        }
+
+        // check if user already exists
+        $user = User::where('ddID', '=', Request::get('userId'))
+            ->first();
+        if (!empty($user)) {
+            // update user name
+            $user->name = Request::get('firstName') . " " . Request::get('lastName');
+            $user->save();
+            Auth::login($user);
+        } else {
+            $user = new User;
+            $user->ddID = Request::get('userId');
+            $user->name = Request::get('firstName') . " " . Request::get('lastName');
+            $user->password = Hash::make($this->randString(7));
+            try {
+                $user->save();
+            } catch (Exception $e) {
+                return Response::json(array(
+                        'error' => true,
+                        'message' => 'User ID already registered'),
+                    200
+                );
+            }
+            Auth::login($user);
+        }
+
+        return Response::json(array(
+                'error' => false,
+                'message' => 'Successfully logged in'),
+            200
+        );
+    }
     
     public function login()
     {

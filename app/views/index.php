@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>DD Snacks</title>
 
     <link rel="shortcut icon" href="/img/favicon.ico">
@@ -23,12 +23,16 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular-sanitize.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script>
-    
+
+    <!-- DD SDK -->
+    <script src="js/libs/DDEventsSDK.js"></script>
+
     <!-- ANGULAR -->
     <script src="js/controllers/mainCtrl.js"></script>
     <script src="js/services/snackService.js"></script>
     <script src="js/services/voteService.js"></script>
     <script src="js/services/groupService.js"></script>
+    <script src="js/services/loginService.js"></script>
     <script src="js/services/commentService.js"></script>
     <script src="js/app.js"></script>
     <script src="js/libs/bootstrap-maxlength.min.js"></script>

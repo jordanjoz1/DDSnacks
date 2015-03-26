@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>DD Snacks</title>
 
     <link rel="shortcut icon" href="/img/favicon.ico">
@@ -23,15 +23,20 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular-sanitize.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script>
-    
+
+    <!-- DD SDK -->
+    <script src="../../js/libs/DDEventsSDK.js"></script>
+
     <!-- ANGULAR -->
     <script src="../../js/controllers/mainCtrl.js"></script>
     <script src="../../js/services/snackService.js"></script>
     <script src="../../js/services/voteService.js"></script>
     <script src="../../js/services/groupService.js"></script>
+    <script src="../../js/services/loginService.js"></script>
     <script src="../../js/services/commentService.js"></script>
     <script src="../../js/app.js"></script>
     <script src="../../js/libs/bootstrap-maxlength.min.js"></script>
+
 
 </head>
 <body class="container" data-ng-app="snackApp" data-ng-controller="mainController">
@@ -49,13 +54,6 @@
 
         <!-- NEW SNACK FORM =============================================== -->
         <form data-ng-submit="submitSnack()" data-ng-hide="loading">
-            <!-- ng-submit will disable the default form action and use our function -->
-            <!-- ROOM FILTER =============================================== -->
-            <select class="form-control" data-ng-model="selected.group" data-ng-hide="groups.length < 2"
-                    data-ng-options="group.name for group in groups | orderBy:'name' : true">
-                <option value="">Select a snack room</option>
-            </select>
-            <br/>
             <div data-ng-show="selected.group">
                 <div class="entry input-group">
                     <input type="text" class="form-control input-lg" name="snack" data-ng-model="snackData.name"
@@ -109,7 +107,7 @@
             </div>
             <div class="collapse" id="comments-{{ snack.id }}" >
                 <div class="comments text-left" data-ng-repeat="comment in snack.comments" data-target="#comments-{{ snack.id }}">
-                    <div><div class="username">{{ comment.user.email.split('@')[0].split('+')[0] }}</div> <span ng-bind-html="comment.comment | linky:'_blank'"></span> <div class="timestamp">{{ timeSince(comment.created_at) }}</div></div>
+                    <div><div class="username">{{ comment.user.name }}</div> <span ng-bind-html="comment.comment | linky:'_blank'"></span> <div class="timestamp">{{ timeSince(comment.created_at) }}</div></div>
                 </div>
                 <form data-ng-submit="submitComment(snack.id)" data-ng-controller="commentController" class="comment-form">
                     <div class="input-group comment-input-group">

@@ -56,6 +56,8 @@ Route::get('login', array('uses' => 'UsersController@login'));
 
 Route::post('login', array('uses' => 'UsersController@postLogin'));
 
+Route::post('prideLogin', array('uses' => 'UsersController@postPrideLogin'));
+
 Route::get('logout', array('uses' => 'UsersController@logout'));
 
 // legacy methods for getting data - should be removed

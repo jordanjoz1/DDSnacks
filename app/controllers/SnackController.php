@@ -10,6 +10,7 @@ class SnackController extends \BaseController {
 	public function index()
     {
         $groupId = Input::get('group');
+        // get just one group
         if (!empty($groupId)) {
             $snacks = Snack::with('comments', 'comments.user')
                 ->leftJoin('votes', function ($join) {
@@ -24,6 +25,7 @@ class SnackController extends \BaseController {
                 ->where('groups.name', urldecode(Input::get('group')))
                 ->get();
         } else {
+            // or get all groups
             $snacks = Snack::with('comments', 'comments.user')
                 ->leftJoin('votes', function ($join) {
                     $join->on('snacks.id', '=', 'votes.snack_id')
