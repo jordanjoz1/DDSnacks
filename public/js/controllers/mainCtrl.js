@@ -72,18 +72,18 @@ angular.module('mainCtrl', ['ngRoute'])
         $scope.loading = true;
 
         // get group id from path
-        $path = $location.path().split("/");
-        $groupId = $path.pop();
-        $pathType = $path.pop();
-        if ($pathType != "g") {
-            $groupId = null;
+        var path = $location.path().split("/");
+        var groupId = path.pop();
+        var pathType = path.pop();
+        if (pathType != "g" || (pathType == "g" && groupId == "all")) {
+            groupId = null;
         }
 
-        $loadData = function() {
+        var loadData = function() {
             // get all the snacks first and bind it to the $scope.snacks object
             // use the function we created in our service
             // GET ALL SNACKS ====================================================
-            Snack.get($groupId)
+            Snack.get(groupId)
                 .success(function(data) {
                     // calculate sum of votes
                     for (var i in data.snacks) {
@@ -93,7 +93,7 @@ angular.module('mainCtrl', ['ngRoute'])
                     $scope.loading = false;
                 });
 
-            Group.get($groupId)
+            Group.get(groupId)
                 .success(function(data) {
                     $scope.groups = data.groups;
                     // automatically select the first group
@@ -102,26 +102,26 @@ angular.module('mainCtrl', ['ngRoute'])
         };
 
         // use pride login for specific groups
-        if ($groupId != null) {
+        if (groupId != null) {
             DD.Events.onReady(function() {
                 DD.Events.getCurrentUserAsync(function (user) {
-                    $test = new Object();
-                    $test.userId = user.UserId;
-                    $test.firstName = user.FirstName;
-                    $test.lastName = user.LastName;
-                    User.save($test)
+                    var newUser = new Object();
+                    newUser.userId = user.UserId;
+                    newUser.firstName = user.FirstName;
+                    newUser.lastName = user.LastName;
+                    User.save(newUser)
                         .success(function (data) {
                             // check for failure
                             if (data.error) {
                                 alert(data.message);
                                 return;
                             }
-                            $loadData();
+                            loadData();
                         })
                 });
             });
         } else {
-            $loadData()
+            loadData()
         }
 
         // function to handle submitting the form
