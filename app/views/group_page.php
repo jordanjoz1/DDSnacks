@@ -54,6 +54,12 @@
 
         <!-- NEW SNACK FORM =============================================== -->
         <form data-ng-submit="submitSnack()" data-ng-hide="loading">
+            <!-- ng-submit will disable the default form action and use our function -->
+            <!-- ROOM FILTER =============================================== -->
+            <select id="groups-form-control" class="form-control" data-ng-model="selected.group"
+                    data-ng-options="group.name for group in groups | orderBy:'name' : true" data-ng-show="groups && groups.length > 1">
+                <option value="">Select a snack room</option>
+            </select>
             <div data-ng-show="selected.group">
                 <div class="entry input-group">
                     <input type="text" class="form-control input-lg" name="snack" data-ng-model="snackData.name"
