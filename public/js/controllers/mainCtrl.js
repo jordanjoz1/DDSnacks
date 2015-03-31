@@ -75,7 +75,15 @@ angular.module('mainCtrl', ['ngRoute'])
         var path = $location.path().split("/");
         var groupId = path.pop();
         var pathType = path.pop();
-        if (pathType != "g" || (pathType == "g" && groupId == "all")) {
+        var attemptLogin = true;
+        // not an individual group page
+        if (pathType != "g") {
+            attemptLogin = false;
+            groupId = null;
+        }
+        // all group hack
+        if (pathType == "g" && groupId == "all") {
+            attemptLogin = true;
             groupId = null;
         }
 
@@ -102,7 +110,7 @@ angular.module('mainCtrl', ['ngRoute'])
         };
 
         // use pride login for specific groups
-        if (groupId != null) {
+        if (attemptLogin) {
             DD.Events.onReady(function() {
                 DD.Events.getCurrentUserAsync(function (user) {
                     var newUser = new Object();
