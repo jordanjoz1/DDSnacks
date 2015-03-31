@@ -20,11 +20,6 @@ class CreateCommentsTable extends Migration {
             $table->string('comment');
             $table->timestamps();
 		});
-        
-        Schema::table('comments', function($table) {
-            $table->foreign('snack_id')->references('id')->on('snacks');
-            $table->foreign('user_id')->references('id')->on('users');
-        });
 	}
 
 	/**
@@ -34,6 +29,6 @@ class CreateCommentsTable extends Migration {
 	 */
 	public function down()
 	{
-        Schema::drop('comments');
+        Schema::dropIfExists('comments');
 	}
 }

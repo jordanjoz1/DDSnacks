@@ -21,11 +21,6 @@ class CreateVotesTable extends Migration {
             $table->timestamps();
             $table->unique( array('snack_id','user_id') );
 		});
-        
-        Schema::table('votes', function($table) {
-            $table->foreign('snack_id')->references('id')->on('snacks');
-            $table->foreign('user_id')->references('id')->on('users');
-        });
 	}
 
 	/**
@@ -35,7 +30,7 @@ class CreateVotesTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('votes');
+		Schema::dropIfExists('votes');
 	}
 
 }

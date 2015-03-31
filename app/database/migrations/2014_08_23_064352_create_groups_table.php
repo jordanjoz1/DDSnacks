@@ -22,10 +22,6 @@ class CreateGroupsTable extends Migration {
             $table->boolean('global')->default(false);
             $table->timestamps();
 		});
-        
-        Schema::table('groups', function($table) {
-            $table->foreign('created_by')->references('id')->on('users');
-        });
 	}
 
 	/**
@@ -35,7 +31,7 @@ class CreateGroupsTable extends Migration {
 	 */
 	public function down()
 	{
-        Schema::drop('groups');
+        Schema::dropIfExists('groups');
 	}
 
 }

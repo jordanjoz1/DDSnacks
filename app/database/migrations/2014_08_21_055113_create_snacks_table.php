@@ -24,11 +24,6 @@ class CreateSnacksTable extends Migration {
             $table->timestamps();
             $table->unique( array('name','group_id') );
 		});
-        
-        Schema::table('snacks', function($table) {
-            $table->foreign('group_id')->references('id')->on('groups');
-            $table->foreign('created_by')->references('id')->on('users');
-        });
 	}
 
 	/**
@@ -38,7 +33,7 @@ class CreateSnacksTable extends Migration {
 	 */
 	public function down()
 	{
-        Schema::drop('snacks');
+        Schema::dropIfExists('snacks');
 	}
 
 }

@@ -54,10 +54,11 @@ return array(
 
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => 'localhost',
+			'host'      => 'localhost:8888',
+            'unix_socket'   => '/Applications/MAMP/tmp/mysql/mysql.sock',
 			'database'  => 'ddsnacks',
 			'username'  => 'root',
-			'password'  => '',
+			'password'  => 'root',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
