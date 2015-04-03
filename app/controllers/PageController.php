@@ -51,10 +51,14 @@ class PageController extends \BaseController {
 
         // create new group if necessary
         if (empty($group)) {
-            $snack = new Group;
-            $snack->name = urldecode($id);
-            $snack->created_by = Auth::user()->id;
-            $snack->save();
+            // only let users who are logged in create new groups
+            if(!Auth::check()) {
+                return "Login to create a new group";
+            }
+            $newGroup = new Group;
+            $newGroup->name = urldecode($id);
+            $newGroup->created_by = Auth::user()->id;
+            $newGroup->save();
         }
 
         DB::commit();
