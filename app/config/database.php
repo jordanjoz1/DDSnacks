@@ -54,11 +54,10 @@ return array(
 
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => 'localhost:8888',
-            'unix_socket'   => '/Applications/MAMP/tmp/mysql/mysql.sock',
-			'database'  => 'ddsnacks',
-			'username'  => 'root',
-			'password'  => 'root',
+			'host'      => parse_url(getenv("DATABASE_URL"))["host"],
+			'database'  => substr(parse_url(getenv("DATABASE_URL"))["path"], 1),
+			'username'  => parse_url(getenv("DATABASE_URL"))["user"],
+			'password'  => parse_url(getenv("DATABASE_URL"))["pass"],
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
