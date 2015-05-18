@@ -12,10 +12,10 @@ class AddVotesForeignKeys extends Migration {
 	 */
 	public function up()
 	{
-        Schema::table('votes', function($table) {
-            $table->foreign('snack_id')->references('id')->on('snacks');
-            $table->foreign('user_id')->references('id')->on('users');
-        });
+        // Schema::table('votes', function($table) {
+        //     $table->foreign('snack_id')->references('id')->on('snacks');
+        //     $table->foreign('user_id')->references('id')->on('users');
+        // });
 	}
 
 	/**
@@ -25,10 +25,10 @@ class AddVotesForeignKeys extends Migration {
 	 */
 	public function down()
 	{
-        Schema::table('votes', function($table) {
-            $table->dropForeign('votes_snack_id_foreign');
-            $table->dropForeign('votes_user_id_foreign');
-        });
+        // Schema::table('votes', function($table) {
+        //     $table->dropForeign('votes_snack_id_foreign');
+        //     $table->dropForeign('votes_user_id_foreign');
+        // });
 	}
 
 }

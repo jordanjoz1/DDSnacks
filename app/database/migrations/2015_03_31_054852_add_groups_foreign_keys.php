@@ -12,9 +12,9 @@ class AddGroupsForeignKeys extends Migration {
 	 */
 	public function up()
 	{
-        Schema::table('groups', function($table) {
-            $table->foreign('created_by')->references('id')->on('users');
-        });
+        // Schema::table('groups', function($table) {
+        //     $table->foreign('created_by')->references('id')->on('users');
+        // });
 	}
 
 	/**
@@ -24,9 +24,9 @@ class AddGroupsForeignKeys extends Migration {
 	 */
 	public function down()
 	{
-        Schema::table('groups', function($table) {
-            $table->dropForeign('groups_created_by_foreign');
-        });
+        // Schema::table('groups', function($table) {
+        //     $table->dropForeign('groups_created_by_foreign');
+        // });
 	}
 
 }
