@@ -9,9 +9,7 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
-    <!-- load bootstrap via cdn -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-    <!-- load fontawesome -->
     <link rel="stylesheet" href="../../css/styles.css">
     <style>
         @import url(//fonts.googleapis.com/css?family=Lato:700);
@@ -63,7 +61,7 @@
             <div data-ng-show="selected.group">
                 <div class="entry input-group">
                     <input type="text" class="form-control input-lg" name="snack" data-ng-model="snackData.name"
-                           placeholder="Search {{selected.group.editable == 1 ? 'or add something new' : 'the provided options'}} " maxlength="50" id="snack-input"/>
+                           placeholder="Search {{selected.group.editable == 1 ? 'or add something new' : 'the provided options'}} " maxlength="140" id="snack-input"/>
                     <span class="input-group-btn">
                         <button class="btn btn-success btn-add btn-lg" type="submit">
                             <span class="glyphicon glyphicon-plus" data-ng-show="selected.group.editable"></span>
