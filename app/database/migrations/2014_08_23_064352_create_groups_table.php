@@ -22,6 +22,7 @@ class CreateGroupsTable extends Migration {
             $table->boolean('global')->default(false);
             $table->timestamps();
 		});
+		DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 	}
 
 	/**
@@ -31,6 +32,7 @@ class CreateGroupsTable extends Migration {
 	 */
 	public function down()
 	{
+		DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         Schema::dropIfExists('groups');
 	}
 

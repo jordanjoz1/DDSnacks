@@ -12,10 +12,16 @@ class AddCommentsForeignKeys extends Migration {
 	 */
 	public function up()
 	{
-        // Schema::table('comments', function($table) {
-        //     $table->foreign('snack_id')->references('id')->on('snacks');
-        //     $table->foreign('user_id')->references('id')->on('users');
-        // });
+        Schema::table('comments', function($table) {
+            $table->foreign('snack_id')
+            	->references('id')
+            	->on('snacks')
+            	->onDelete('no action');
+            $table->foreign('user_id')
+            	->references('id')
+            	->on('users')
+            	->onDelete('no action');
+        });
 	}
 
 	/**
@@ -25,10 +31,10 @@ class AddCommentsForeignKeys extends Migration {
 	 */
 	public function down()
 	{
-        // Schema::table('comments', function($table) {
-        //     $table->dropForeign('comments_snack_id_foreign');
-        //     $table->dropForeign('comments_user_id_foreign');
-        // });
+        Schema::table('comments', function($table) {
+            $table->dropForeign('comments_snack_id_foreign');
+            $table->dropForeign('comments_user_id_foreign');
+        });
 	}
 
 }

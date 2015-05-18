@@ -21,6 +21,7 @@ class CreateVotesTable extends Migration {
             $table->timestamps();
             $table->unique( array('snack_id','user_id') );
 		});
+		DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 	}
 
 	/**
@@ -30,6 +31,7 @@ class CreateVotesTable extends Migration {
 	 */
 	public function down()
 	{
+		DB::statement('SET FOREIGN_KEY_CHECKS = 0');
 		Schema::dropIfExists('votes');
 	}
 

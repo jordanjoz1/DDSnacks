@@ -20,6 +20,7 @@ class CreateCommentsTable extends Migration {
             $table->string('comment');
             $table->timestamps();
 		});
+		DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 	}
 
 	/**
@@ -29,6 +30,7 @@ class CreateCommentsTable extends Migration {
 	 */
 	public function down()
 	{
+		DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         Schema::dropIfExists('comments');
 	}
 }

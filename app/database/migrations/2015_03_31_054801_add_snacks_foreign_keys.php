@@ -12,10 +12,16 @@ class AddSnacksForeignKeys extends Migration {
 	 */
 	public function up()
 	{
-        // Schema::table('snacks', function($table) {
-        //     $table->foreign('group_id')->references('id')->on('groups');
-        //     $table->foreign('created_by')->references('id')->on('users');
-        // });
+        Schema::table('snacks', function($table) {
+            $table->foreign('group_id')
+            	->references('id')
+            	->on('groups')
+            	->onDelete('no action');
+            $table->foreign('created_by')
+            	->references('id')
+            	->on('users')
+            	->onDelete('no action');
+        });
 	}
 
 	/**
@@ -25,10 +31,10 @@ class AddSnacksForeignKeys extends Migration {
 	 */
 	public function down()
 	{
-        // Schema::table('snacks', function($table) {
-        //     $table->dropForeign('snacks_group_id_foreign');
-        //     $table->dropForeign('snacks_created_by_foreign');
-        // });
+        Schema::table('snacks', function($table) {
+            $table->dropForeign('snacks_group_id_foreign');
+            $table->dropForeign('snacks_created_by_foreign');
+        });
 	}
 
 }

@@ -24,6 +24,7 @@ class CreateSnacksTable extends Migration {
             $table->timestamps();
             $table->unique( array('name','group_id') );
 		});
+		DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 	}
 
 	/**
@@ -33,6 +34,7 @@ class CreateSnacksTable extends Migration {
 	 */
 	public function down()
 	{
+		DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         Schema::dropIfExists('snacks');
 	}
 

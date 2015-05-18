@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration {
             $table->timestamps();
             $table->rememberToken();
 		});
+		DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 	}
 
 	/**
@@ -31,6 +32,7 @@ class CreateUsersTable extends Migration {
 	 */
 	public function down()
 	{
+		DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         Schema::dropIfExists('users');
 	}
 
