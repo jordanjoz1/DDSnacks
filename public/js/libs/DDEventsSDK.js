@@ -19,7 +19,7 @@
             },
 
             /// Get Current User
-            getCurrentUserImplementation: function () { this.getCurrentUserCallback({ UserId: 0, EmailAddress: '', FirstName: '', LastName: '' }); },
+            getCurrentUserImplementation: function () { this.getCurrentUserCallback({ UserId: 1, EmailAddress: '', FirstName: 'Jordan', LastName: 'Joz' }); },
             getCurrentUserAsync: function (callback) {
                 this.getCurrentUserCallback = callback;
                 this.getCurrentUserImplementation();
@@ -55,7 +55,7 @@
     };
 
     var initCheck = setInterval(function () {
-        if (DD.Events.getSignedAPIImplementation !== throwNotInitialized) {
+        if (DD.Events.getSignedAPIImplementation === throwNotInitialized) {
             clearInterval(initCheck);
             var cbs = onReadyCallbacks;
             onReadyCallbacks = null;
